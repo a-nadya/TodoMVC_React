@@ -1,4 +1,5 @@
 import {Todo} from "../models/todo";
+import {activeItemsCount} from "./activeItemsCount";
 
 const addTodo = (todos: Todo[], todoText: Todo["text"]): Todo[] => {
     todos.push(createTodo(todoText));
@@ -14,7 +15,7 @@ const createTodo = (text: Todo["text"]): Todo => {
     };
 };
 
-const updateTodoStatus = (todos: Todo[], key:Todo["key"]): Todo[] => {
+const updateTodoStatus = (todos: Todo[], key: Todo["key"]): Todo[] => {
     todos.map(todo => {
         if (todo.key === key) {
             todo.active = !todo.active;
@@ -23,8 +24,19 @@ const updateTodoStatus = (todos: Todo[], key:Todo["key"]): Todo[] => {
     return todos;
 };
 
+const updateAllTodosStatus = (todos: Todo[]): Todo[] => {
+    const count = activeItemsCount.get(todos);
+    todos.map(todo => {
+            if (todo.active || count === 0) {
+                todo.active = !todo.active;
+            }
+        }
+    );
+    return todos;
+};
 
 export const todosConstructor = {
     add: addTodo,
     updateStatus: updateTodoStatus,
+    updateAllStatuses: updateAllTodosStatus,
 };

@@ -4,15 +4,19 @@ import {api} from "../api/api";
 import {Todo} from "../models/todo";
 import {todosConstructor} from "../api/todosConstructor";
 import {TodoItem} from "./TodoList/TodoItem";
+import {activeItemsCount} from "../api/activeItemsCount";
+
 const styles = require("./todos.less");
 
 interface TodosState {
     todos: Todo[];
+    itemsLeft: number;
 }
 
 export default class Todos extends React.Component<{}, TodosState> {
     state: TodosState = {
         todos: [],
+        itemsLeft: 0,
     };
 
     componentDidMount(): void {
@@ -22,9 +26,11 @@ export default class Todos extends React.Component<{}, TodosState> {
     render(): React.ReactNode {
         return (
             <>
-                <Input onEnter={this.handleAddTodo}/>
+                <Input onEnter={this.handleAddTodo} onCheck={this.handleCheckAllTodos}/>
                 <div className={styles.list}>
-                    {this.state.todos.map(todo => <TodoItem todo={todo} key={todo.key} onCheck={this.handleCheckTodo}/>)}
+                    {this.state.todos.map(todo =>
+                        <TodoItem todo={todo} key={todo.key} onCheck={this.handleCheckTodo}/>
+                        )}
                 </div>
             </>
         );
@@ -32,18 +38,25 @@ export default class Todos extends React.Component<{}, TodosState> {
 
     loadData = async () => {
         const todos = await api.select();
-        this.setState({todos});
+        const itemsLeft = activeItemsCount.get(todos);
+        this.setState({todos, itemsLeft});
     };
 
     handleAddTodo = async (text: string) => {
         const todos = todosConstructor.add(this.state.todos, text);
-        this.setState({todos});
         await api.update(todos);
+        this.loadData();
     };
 
     handleCheckTodo = async (key: string) => {
         const todos = todosConstructor.updateStatus(this.state.todos, key);
-        this.setState({todos});
         await api.update(todos);
+        this.loadData();
+    };
+
+    handleCheckAllTodos = async () => {
+        const todos = todosConstructor.updateAllStatuses(this.state.todos);
+        await api.update(todos);
+        this.loadData();
     }
 }

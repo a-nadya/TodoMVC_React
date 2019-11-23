@@ -8,6 +8,7 @@ interface InputState {
 
 interface InputProps {
     onEnter: (value: string) => void;
+    onCheck: () => void;
 }
 
 export default class Input extends React.Component<InputProps, InputState> {
@@ -18,7 +19,7 @@ export default class Input extends React.Component<InputProps, InputState> {
     render(): React.ReactElement {
         return (
             <>
-                <input type="checkbox"/>
+                <input type="checkbox" onChange={this.props.onCheck}/>
                 <input className={styles.input}
                        placeholder="What needs to be done?" value={this.state.inputValue}
                        onKeyDown={this.keyPress} onChange={this.handleChange}
