@@ -1,7 +1,8 @@
 import * as React from "react";
 import {render} from "react-dom";
+import Todos from "./components/todos";
 
 render(
-    <div>test</div>,
+    <Todos/>,
     document.getElementById("root")
 );
