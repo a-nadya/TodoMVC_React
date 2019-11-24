@@ -1,7 +1,8 @@
-import {Todo} from "../models/todo";
+import {Todos} from "../models/todos";
 
-const calcItemsLeft = (todos: Todo[]): number => {
-    return todos.reduce((sum, current) => sum + Number(current.active), 0);
+const calcItemsLeft = (todos: Todos): number => {
+    const todosItems = Object.values(todos);
+    return todosItems.reduce((sum, current) => sum + Number(current.active), 0);
 };
 
 export const activeItemsCount = {

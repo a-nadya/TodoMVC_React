@@ -6,18 +6,21 @@ const classNames = require("classnames");
 
 interface TodoComponentProps {
     todo: Todo;
+    todoKey: string;
     onCheck: (key: string) => void;
+    onDelete: (key: string) => void;
 }
 
 export class TodoItem extends React.Component<TodoComponentProps, {}> {
     render() {
-        const {todo} = this.props;
         return (
             <span className={styles.todo}>
-                <input type="checkbox" onChange={() => this.props.onCheck(todo.key)} checked={!todo.active}/>
-                <input className={classNames({[styles.text]: true}, {[styles.completed]: !todo.active})}
-                       value={todo.text} readOnly={true}
+                <input type="checkbox" onChange={() => this.props.onCheck(this.props.todoKey)}
+                       checked={!this.props.todo.active}/>
+                <input className={classNames({[styles.text]: true}, {[styles.completed]: !this.props.todo.active})}
+                       value={this.props.todo.text} readOnly={true}
                 />
+                <button onClick={() => this.props.onDelete(this.props.todoKey)}>x</button>
             </span>
         )
     }

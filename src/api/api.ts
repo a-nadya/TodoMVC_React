@@ -1,9 +1,9 @@
-import {Todo} from "../models/todo";
+import {Todos} from "../models/todos";
 
 const BIN_ID = "5dd9060c040d843991f79576";
 const SECRET_KEY = "$2b$10$0C7oxSomMcnhkFJ20wQd9.8YEUpz920F5/rt7y7TsfNJj6y33exf6";
 
-const getTodos = async (): Promise<Todo[]> => {
+const getTodos = async (): Promise<Todos> => {
     const url = `https://api.jsonbin.io/b/${BIN_ID}/latest `;
     return fetch(url, {
         method: "GET",
@@ -18,7 +18,7 @@ const getTodos = async (): Promise<Todo[]> => {
         })
 };
 
-const setTodos = async (todos: Todo[]) => {
+const setTodos = async (todos: Todos): Promise<{ [key: string]: Todos }> => {
     const url = `https://api.jsonbin.io/b/${BIN_ID}`;
     return fetch(url, {
         method: "PUT",
@@ -30,6 +30,7 @@ const setTodos = async (todos: Todo[]) => {
     })
         .then(response => {
             if (response.ok) {
+                console.log(response.json());
                 return response.json();
             }
         })
