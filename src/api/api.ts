@@ -30,7 +30,6 @@ const setTodos = async (todos: Todos): Promise<{ [key: string]: Todos }> => {
     })
         .then(response => {
             if (response.ok) {
-                console.log(response.json());
                 return response.json();
             }
         })

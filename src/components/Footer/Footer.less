@@ -1,0 +1,24 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+input[name="todosToShow"] {
+  display: none;
+}
+
+label {
+  cursor: pointer;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+label:hover {
+  border-color: lightgray;
+}
+
+input[name="todosToShow"]:checked + label {
+  border-color: gray;
+}

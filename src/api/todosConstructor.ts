@@ -29,13 +29,23 @@ const updateTodoStatus = (todos: Todos, key: string): Todos => {
 
 const updateAllTodosStatus = (todos: Todos): Todos => {
     const count = activeItemsCount.get(todos);
-    const todosItems = Object.values(todos);
-    todosItems.map(todo => {
+    const todosData = Object.values(todos);
+    todosData.map(todo => {
             if (todo.active || count === 0) {
                 todo.active = !todo.active;
             }
         }
     );
+    return todos;
+};
+
+const deleteCompletedTodos = (todos: Todos): Todos => {
+    const todosKeys = Object.keys(todos);
+    todosKeys.map(key => {
+        if (!todos[key]["active"]) {
+            delete todos[key];
+        }
+    });
     return todos;
 };
 
@@ -45,4 +55,5 @@ export const todosConstructor = {
     delete: deleteTodo,
     updateStatus: updateTodoStatus,
     updateAllStatuses: updateAllTodosStatus,
+    deleteCompleted: deleteCompletedTodos,
 };
