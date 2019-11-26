@@ -1,13 +1,13 @@
+@import "../../variables.less";
+
 .footer {
   display: flex;
   justify-content: space-between;
+  padding: 15px;
+  color: @grayColor;
 }
 
-input[name="todosToShow"] {
-  display: none;
-}
-
-label {
+.label {
   cursor: pointer;
   padding: 5px;
   margin: 5px;
@@ -15,10 +15,10 @@ label {
   border-radius: 5px;
 }
 
-label:hover {
-  border-color: lightgray;
+.label:hover {
+  border-color: @lightGrayColor;
 }
 
-input[name="todosToShow"]:checked + label {
-  border-color: gray;
+input[name="todosToShow"]:checked + .label {
+  border-color: @grayColor;
 }

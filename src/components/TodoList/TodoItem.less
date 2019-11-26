@@ -1,12 +1,28 @@
 @import "../../variables.less";
 
+.todo {
+  display: flex;
+  position: relative;
+  border-bottom: thin solid @lightGrayColor;
+}
+
 .text {
-  width: @width;
   height: @height;
   font-size: @fontSize;
+  flex: 2;
 }
 
 .completed {
-  color: @grayColor;
+  color: @lightGrayColor;
   text-decoration: line-through;
+}
+
+.closeButton {
+  visibility: hidden;
+  position: absolute;
+  right: 10px;
+}
+
+.todo:hover .closeButton {
+  visibility: visible;
 }

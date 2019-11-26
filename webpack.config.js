@@ -21,7 +21,7 @@ module.exports = {
                 loader: "ts-loader"
             },
             {
-                test: /\.less$/,
+                test: /\.(css|less)$/,
                 use: [
                     {
                         loader: 'style-loader',
@@ -30,7 +30,7 @@ module.exports = {
                         loader: 'css-loader',
                         options: {
                             modules: {
-                                localIdentName: '[local]',
+                                localIdentName: '[local]___[hash:base64:4]',
                             },
                             sourceMap: true,
                         }

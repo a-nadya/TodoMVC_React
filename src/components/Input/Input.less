@@ -1,13 +1,19 @@
 @import "../../variables.less";
 
+.inputContainer {
+  display: flex;
+  width: @width;
+  border-bottom: medium solid @lightGrayColor;
+}
+
 .input {
   outline: none;
-  width: @width;
   height: @height;
   font-size: @fontSize;
+  flex: 2;
 }
 
 ::placeholder {
   font-style: italic;
-  color: @grayColor;
+  color: @lightGrayColor;
 }

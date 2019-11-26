@@ -13,16 +13,16 @@ const styles = require("./app.less");
 interface TodosState {
     todos: Todos;
     itemsLeft: number;
-    loading: boolean;
     todoToShow: boolean | null;
+    loading: boolean;
 }
 
 export default class App extends React.Component<{}, TodosState> {
     state: TodosState = {
         todos: {},
         itemsLeft: 0,
-        loading: true,
         todoToShow: null,
+        loading: true,
     };
 
     componentDidMount(): void {
@@ -32,25 +32,31 @@ export default class App extends React.Component<{}, TodosState> {
     render(): React.ReactNode {
         const {todos} = this.state;
         return (
-            <>
-                <Input onEnter={this.handleAddTodo} onCheck={this.handleCheckAllTodos}/>
-                <div className={styles.list}>
-                    {Object.keys(todos).map(key =>
-                        <TodoItem
-                            todo={todos[key]} todoKey={key} key={key} onCheck={this.handleCheckTodo}
-                            onDelete={this.handleDeleteTodo} shouldShow={this.state.todoToShow}
-                        />
-                    )}
-                </div>
-                <Footer itemsLeft={this.state.itemsLeft} onFilter={this.handleFilterTodo} onClear={this.handleClearCompletedTodo}/>
-            </>
+            (!this.state.loading &&
+                <>
+                    <header>todos</header>
+                    <div className={styles.content}>
+                        <Input onEnter={this.handleAddTodo} onCheck={this.handleCheckAllTodos}/>
+                        <div className={styles.list}>
+                            {Object.keys(todos).map(key =>
+                                <TodoItem
+                                    todo={todos[key]} todoKey={key} key={key} onCheck={this.handleCheckTodo}
+                                    onDelete={this.handleDeleteTodo} shouldShow={this.state.todoToShow}
+                                />
+                            )}
+                        </div>
+                        <Footer itemsLeft={this.state.itemsLeft} onFilter={this.handleFilterTodo}
+                                onClear={this.handleClearCompletedTodo}/>
+                    </div>
+                </>
+            )
         );
     }
 
     loadData = async () => {
         const todos = await api.select();
         const count = activeItemsCount.get(todos);
-        this.setState({todos, itemsLeft: count});
+        this.setState({todos, itemsLeft: count, loading: false});
     };
 
     handleAddTodo = async (text: Todo["text"]) => {

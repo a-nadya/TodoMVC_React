@@ -13,14 +13,15 @@ export class Footer extends React.Component<FooterProps> {
         return (
             <div className={styles.footer}>
                 <div>{this.props.itemsLeft + " items left"}</div>
-                <div>
-                    <input type="radio" name="todosToShow" id="All" onChange={() => this.props.onFilter(null)}/>
-                    <label htmlFor="All">All</label>
+                <span>
+                    <input type="radio" name="todosToShow" id="All" onChange={() => this.props.onFilter(null)}
+                           defaultChecked={true}/>
+                    <label htmlFor="All" className={styles.label}>All</label>
                     <input type="radio" name="todosToShow" id="Active" onChange={() => this.props.onFilter(true)}/>
-                    <label htmlFor="Active">Active</label>
+                    <label htmlFor="Active" className={styles.label}>Active</label>
                     <input type="radio" name="todosToShow" id="Completed" onChange={() => this.props.onFilter(false)}/>
-                    <label htmlFor="Completed">Completed</label>
-                </div>
+                    <label htmlFor="Completed" className={styles.label}>Completed</label>
+                </span>
                 <button onClick={this.props.onClear}>Clear completed</button>
             </div>
         );
