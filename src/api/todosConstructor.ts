@@ -1,6 +1,6 @@
 import {Todo} from "../models/todo";
 import {Todos} from "../models/todos";
-import {activeItemsCount} from "./activeItemsCount";
+import {itemsCount} from "./itemsCount";
 
 const addTodo = (todos: Todos, todoText: Todo["text"]): Todos => {
     const key = Math.random().toString().slice(2);
@@ -28,7 +28,7 @@ const updateTodoStatus = (todos: Todos, key: string): Todos => {
 };
 
 const updateAllTodosStatus = (todos: Todos): Todos => {
-    const count = activeItemsCount.get(todos);
+    const count = itemsCount.getActive(todos);
     const todosData = Object.values(todos);
     todosData.map(todo => {
             if (todo.active || count === 0) {
