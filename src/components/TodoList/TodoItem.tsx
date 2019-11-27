@@ -8,7 +8,7 @@ const classNames = require("classnames");
 interface TodoComponentProps {
     todo: Todo;
     todoKey: string;
-    shouldShow: boolean | null;
+    filterCondition: string;
     onCheck: (key: string) => void;
     onDelete: (key: string) => void;
 }
@@ -16,15 +16,29 @@ interface TodoComponentProps {
 export class TodoItem extends React.Component<TodoComponentProps> {
     render() {
         return (
-            ((this.props.shouldShow === null) || (this.props.shouldShow === this.props.todo.active)) &&
-            <div className={styles.todo}>
-                <Checkbox todo={this.props.todo} todoKey={this.props.todoKey} onCheck={this.props.onCheck}/>
-                <input className={classNames({[styles.text]: true}, {[styles.completed]: !this.props.todo.active})}
-                       value={this.props.todo.text} readOnly={true}
-                />
-                <button className={styles.closeButton} onClick={() => this.props.onDelete(this.props.todoKey)}>x
-                </button>
-            </div>
+            (this.shouldItemShow() &&
+                <div className={styles.todo}>
+                    <Checkbox todo={this.props.todo} todoKey={this.props.todoKey} onCheck={this.props.onCheck}/>
+                    <input className={classNames({[styles.text]: true}, {[styles.completed]: !this.props.todo.active})}
+                           value={this.props.todo.text} readOnly={true}
+                    />
+                    <button className={styles.closeButton} onClick={() => this.props.onDelete(this.props.todoKey)}>x
+                    </button>
+                </div>
+            )
         )
+    }
+
+    private shouldItemShow = (): boolean => {
+        switch (this.props.filterCondition) {
+            case "all":
+                return true;
+            case "active":
+                return this.props.todo.active;
+            case "completed":
+                return !this.props.todo.active;
+            default:
+                return false;
+        }
     }
 }

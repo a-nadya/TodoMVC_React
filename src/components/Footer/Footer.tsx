@@ -4,7 +4,7 @@ const styles = require("./Footer.less");
 
 interface FooterProps {
     itemsLeft: number;
-    onFilter: (flag: boolean | null) => void;
+    onFilter: (flag: string) => void;
     onClear: () => void;
 }
 
@@ -14,12 +14,12 @@ export class Footer extends React.Component<FooterProps> {
             <div className={styles.footer}>
                 <div>{this.props.itemsLeft + " items left"}</div>
                 <span>
-                    <input type="radio" name="todosToShow" id="All" onChange={() => this.props.onFilter(null)}
+                    <input type="radio" name="todosToShow" id="All" onChange={() => this.props.onFilter("all")}
                            defaultChecked={true}/>
                     <label htmlFor="All" className={styles.label}>All</label>
-                    <input type="radio" name="todosToShow" id="Active" onChange={() => this.props.onFilter(true)}/>
+                    <input type="radio" name="todosToShow" id="Active" onChange={() => this.props.onFilter("active")}/>
                     <label htmlFor="Active" className={styles.label}>Active</label>
-                    <input type="radio" name="todosToShow" id="Completed" onChange={() => this.props.onFilter(false)}/>
+                    <input type="radio" name="todosToShow" id="Completed" onChange={() => this.props.onFilter("completed")}/>
                     <label htmlFor="Completed" className={styles.label}>Completed</label>
                 </span>
                 <button onClick={this.props.onClear}>Clear completed</button>

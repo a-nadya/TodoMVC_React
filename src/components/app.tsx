@@ -13,7 +13,7 @@ const styles = require("./app.less");
 interface TodosState {
     todos: Todos;
     itemsLeft: number;
-    todoToShow: boolean | null;
+    filterCondition: string;
     loading: boolean;
 }
 
@@ -21,7 +21,7 @@ export default class App extends React.Component<{}, TodosState> {
     state: TodosState = {
         todos: {},
         itemsLeft: 0,
-        todoToShow: null,
+        filterCondition: "all",
         loading: true,
     };
 
@@ -41,7 +41,7 @@ export default class App extends React.Component<{}, TodosState> {
                             {Object.keys(todos).map(key =>
                                 <TodoItem
                                     todo={todos[key]} todoKey={key} key={key} onCheck={this.handleCheckTodo}
-                                    onDelete={this.handleDeleteTodo} shouldShow={this.state.todoToShow}
+                                    onDelete={this.handleDeleteTodo} filterCondition={this.state.filterCondition}
                                 />
                             )}
                         </div>
@@ -88,8 +88,8 @@ export default class App extends React.Component<{}, TodosState> {
         this.setState({todos: todosConstructor.extract(response), itemsLeft: count});
     };
 
-    handleFilterTodo = (flag: boolean | null) => {
-        this.setState({todoToShow: flag});
+    handleFilterTodo = (flag: string) => {
+        this.setState({filterCondition: flag});
     };
 
     handleClearCompletedTodo = async () => {
