@@ -5,8 +5,18 @@
     "module": "commonjs",
     "declaration": true,
     "outDir": "./build",
-    "strict": true
+    "strict": true,
+    "plugins": [
+      {
+        "name": "tslint-language-service",
+        "alwaysShowRuleFailuresAsWarnings": false,
+        "ignoreDefinitionFiles": true,
+        "configFile": "./tslint-webstorm-local.json",
+        "disableNoUnusedVariableRule": true,
+        "supressWhileTypeErrorsPresent": false,
+        "mockTypeScriptVersion": false
+      }
+    ]
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "include": ["src", "typings"]
 }

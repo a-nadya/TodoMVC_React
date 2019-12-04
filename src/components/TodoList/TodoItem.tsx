@@ -2,8 +2,8 @@ import * as React from "react";
 import {Todo} from "../../models/todo";
 import {Checkbox} from "./Checkbox";
 
-const styles = require("./TodoItem.less");
-const classNames = require("classnames");
+import * as styles from "./TodoItem.less";
+import classNames from "classnames";
 
 interface TodoComponentProps {
     todo: Todo;
@@ -19,7 +19,7 @@ export class TodoItem extends React.Component<TodoComponentProps> {
             (this.shouldItemShow() &&
                 <div className={styles.todo}>
                     <Checkbox todo={this.props.todo} todoKey={this.props.todoKey} onCheck={this.props.onCheck}/>
-                    <input className={classNames({[styles.text]: true}, {[styles.completed]: !this.props.todo.active})}
+                    <input className={classNames({[`${styles.text}`]: true}, {[`${styles.completed}`]: !this.props.todo.active})}
                            value={this.props.todo.text} readOnly={true}
                     />
                     <button className={styles.closeButton} onClick={() => this.props.onDelete(this.props.todoKey)}>x
@@ -29,7 +29,7 @@ export class TodoItem extends React.Component<TodoComponentProps> {
         )
     }
 
-    private shouldItemShow = (): boolean => {
+    private readonly shouldItemShow = (): boolean => {
         switch (this.props.filterCondition) {
             case "all":
                 return true;

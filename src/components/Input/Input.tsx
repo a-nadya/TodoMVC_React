@@ -1,9 +1,9 @@
-import * as React from "react";
-
-const styles = require("./Input.less");
+import * as React from 'react';
+import * as styles from './Input.less';
 
 interface InputState {
-    inputValue: string;
+
+          inputValue: string;
 }
 
 interface InputProps {

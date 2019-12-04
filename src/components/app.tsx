@@ -8,7 +8,7 @@ import {Todo} from "../models/todo";
 import {Footer} from "./Footer/Footer";
 import {itemsCount} from "../api/itemsCount";
 
-const styles = require("./app.less");
+import * as styles from "./app.less";
 
 interface TodosState {
     todos: Todos;
@@ -27,8 +27,8 @@ export default class App extends React.Component<{}, TodosState> {
         loading: true,
     };
 
-    componentDidMount(): void {
-        this.loadData();
+    public async componentDidMount(): Promise<void> {
+        await this.loadData();
     }
 
     render(): React.ReactNode {
@@ -58,7 +58,7 @@ export default class App extends React.Component<{}, TodosState> {
         );
     }
 
-    private loadData = async (): Promise<void> => {
+    private readonly loadData = async (): Promise<void> => {
         const todos = await api.select();
         this.setState({
             todos,
@@ -68,36 +68,36 @@ export default class App extends React.Component<{}, TodosState> {
         });
     };
 
-    private handleAddTodo = async (text: Todo["text"]): Promise<void> => {
+    private readonly handleAddTodo = async (text: Todo["text"]): Promise<void> => {
         const todos = todosConstructor.add(this.state.todos, text);
-        this.updateStateAndDataOnServer(todos);
+        await this.updateStateAndDataOnServer(todos);
     };
 
-    private handleCheckTodo = async (key: string): Promise<void> => {
+    private readonly handleCheckTodo = async (key: string): Promise<void> => {
         const todos = todosConstructor.updateStatus(this.state.todos, key);
-        this.updateStateAndDataOnServer(todos);
+        await this.updateStateAndDataOnServer(todos);
     };
 
-    private handleCheckAllTodos = async (): Promise<void> => {
+    private readonly handleCheckAllTodos = async (): Promise<void> => {
         const todos = todosConstructor.updateAllStatuses(this.state.todos);
-        this.updateStateAndDataOnServer(todos);
+        await this.updateStateAndDataOnServer(todos);
     };
 
-    private handleDeleteTodo = async (key: string): Promise<void> => {
+    private readonly handleDeleteTodo = async (key: string): Promise<void> => {
         const todos = todosConstructor.delete(this.state.todos, key);
-        this.updateStateAndDataOnServer(todos);
+        await this.updateStateAndDataOnServer(todos);
     };
 
-    private handleFilterTodo = (flag: string): void => {
+    private readonly handleFilterTodo = (flag: string): void => {
         this.setState({filterCondition: flag});
     };
 
-    private handleClearCompletedTodo = async (): Promise<void> => {
+    private readonly handleClearCompletedTodo = async (): Promise<void> => {
         const todos = todosConstructor.deleteCompleted(this.state.todos);
-        this.updateStateAndDataOnServer(todos);
+        await this.updateStateAndDataOnServer(todos);
     };
 
-    private updateStateAndDataOnServer = async (todos: Todos): Promise<void> => {
+    private readonly updateStateAndDataOnServer = async (todos: Todos): Promise<void> => {
         const response = await api.update(todos);
         this.setState({
             todos: todosConstructor.extract(response),
@@ -106,11 +106,11 @@ export default class App extends React.Component<{}, TodosState> {
         });
     };
 
-    private shouldFooterShow = (): boolean => {
+    private readonly shouldFooterShow = (): boolean => {
         return (this.state.completedItems + this.state.activeItems > 0);
     };
 
-    private shouldClearCompletedShow = (): boolean => {
+    private readonly shouldClearCompletedShow = (): boolean => {
         return (this.state.completedItems > 0);
     }
 }

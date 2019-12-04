@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Todo} from "../../models/todo";
 
-const styles = require("./Checkbox.less");
+import * as styles from "./Checkbox.less";
 
 interface CheckboxProps {
     todo: Todo;
