@@ -1,5 +1,6 @@
 import * as React from "react";
-import {Todo} from "../../models/todo";
+
+import { Todo } from "../../models/todo";
 
 import * as styles from "./Checkbox.less";
 
@@ -10,15 +11,18 @@ interface CheckboxProps {
 }
 
 export class Checkbox extends React.Component<CheckboxProps> {
-    render() {
+    public render(): React.ReactNode {
         return (
             <div className={styles.checkbox}>
-                <input className={styles.input} type="checkbox" id={this.props.todoKey}
-                       onChange={() => this.props.onCheck(this.props.todoKey)}
-                       checked={!this.props.todo.active}
+                <input
+                    className={styles.input}
+                    type="checkbox"
+                    id={this.props.todoKey}
+                    onChange={() => this.props.onCheck(this.props.todoKey)}
+                    checked={!this.props.todo.active}
                 />
-                <label htmlFor={this.props.todoKey} className={styles.label}/>
+                <label htmlFor={this.props.todoKey} className={styles.label} />
             </div>
-        )
+        );
     }
 }

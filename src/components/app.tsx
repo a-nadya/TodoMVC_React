@@ -1,14 +1,15 @@
 import * as React from "react";
-import Input from "./Input/Input";
-import {api} from "../api/api";
-import {todosConstructor} from "../api/todosConstructor";
-import {TodoItem} from "./TodoList/TodoItem";
-import {Todos} from "../models/todos";
-import {Todo} from "../models/todo";
-import {Footer} from "./Footer/Footer";
-import {itemsCount} from "../api/itemsCount";
+
+import { api } from "../api/api";
+import { itemsCount } from "../api/itemsCount";
+import { todosConstructor } from "../api/todosConstructor";
+import { Todo } from "../models/todo";
+import { Todos } from "../models/todos";
 
 import * as styles from "./app.less";
+import { Footer } from "./Footer/Footer";
+import { Input } from "./Input/Input";
+import { TodoItem } from "./TodoList/TodoItem";
 
 interface TodosState {
     todos: Todos;
@@ -18,8 +19,8 @@ interface TodosState {
     loading: boolean;
 }
 
-export default class App extends React.Component<{}, TodosState> {
-    state: TodosState = {
+export class App extends React.Component<{}, TodosState> {
+    public state: TodosState = {
         todos: {},
         activeItems: 0,
         completedItems: 0,
@@ -31,27 +32,36 @@ export default class App extends React.Component<{}, TodosState> {
         await this.loadData();
     }
 
-    render(): React.ReactNode {
+    public render(): React.ReactNode {
         return (
-            (!this.state.loading &&
+            !this.state.loading && (
                 <>
                     <header>todos</header>
                     <div className={styles.content}>
-                        <Input onEnter={this.handleAddTodo} onCheck={this.handleCheckAllTodos}/>
+                        <Input
+                            onEnter={this.handleAddTodo}
+                            onCheck={this.handleCheckAllTodos}
+                        />
                         <div className={styles.list}>
-                            {Object.keys(this.state.todos).map(key =>
+                            {Object.keys(this.state.todos).map(key => (
                                 <TodoItem
-                                    todo={this.state.todos[key]} todoKey={key} key={key} onCheck={this.handleCheckTodo}
-                                    onDelete={this.handleDeleteTodo} filterCondition={this.state.filterCondition}
+                                    todo={this.state.todos[key]}
+                                    todoKey={key}
+                                    key={key}
+                                    onCheck={this.handleCheckTodo}
+                                    onDelete={this.handleDeleteTodo}
+                                    filterCondition={this.state.filterCondition}
                                 />
-                            )}
+                            ))}
                         </div>
-                        {
-                            this.shouldFooterShow() &&
-                            <Footer itemsLeft={this.state.activeItems} onFilter={this.handleFilterTodo}
-                                    onClear={this.handleClearCompletedTodo}
-                                    shouldClearCompletedShow={this.shouldClearCompletedShow()}/>
-                        }
+                        {this.shouldFooterShow() && (
+                            <Footer
+                                itemsLeft={this.state.activeItems}
+                                onFilter={this.handleFilterTodo}
+                                onClear={this.handleClearCompletedTodo}
+                                shouldClearCompletedShow={this.shouldClearCompletedShow()}
+                            />
+                        )}
                     </div>
                 </>
             )
@@ -61,14 +71,16 @@ export default class App extends React.Component<{}, TodosState> {
     private readonly loadData = async (): Promise<void> => {
         const todos = await api.select();
         this.setState({
-            todos,
+            todos: todos,
             activeItems: itemsCount.getActive(todos),
             completedItems: itemsCount.getCompleted(todos),
-            loading: false
+            loading: false,
         });
     };
 
-    private readonly handleAddTodo = async (text: Todo["text"]): Promise<void> => {
+    private readonly handleAddTodo = async (
+        text: Todo["text"]
+    ): Promise<void> => {
         const todos = todosConstructor.add(this.state.todos, text);
         await this.updateStateAndDataOnServer(todos);
     };
@@ -89,7 +101,7 @@ export default class App extends React.Component<{}, TodosState> {
     };
 
     private readonly handleFilterTodo = (flag: string): void => {
-        this.setState({filterCondition: flag});
+        this.setState({ filterCondition: flag });
     };
 
     private readonly handleClearCompletedTodo = async (): Promise<void> => {
@@ -97,20 +109,20 @@ export default class App extends React.Component<{}, TodosState> {
         await this.updateStateAndDataOnServer(todos);
     };
 
-    private readonly updateStateAndDataOnServer = async (todos: Todos): Promise<void> => {
+    private readonly updateStateAndDataOnServer = async (
+        todos: Todos
+    ): Promise<void> => {
         const response = await api.update(todos);
         this.setState({
             todos: todosConstructor.extract(response),
             activeItems: itemsCount.getActive(todos),
-            completedItems: itemsCount.getCompleted(todos)
+            completedItems: itemsCount.getCompleted(todos),
         });
     };
 
-    private readonly shouldFooterShow = (): boolean => {
-        return (this.state.completedItems + this.state.activeItems > 0);
-    };
+    private readonly shouldFooterShow = (): boolean =>
+        this.state.completedItems + this.state.activeItems > 0;
 
-    private readonly shouldClearCompletedShow = (): boolean => {
-        return (this.state.completedItems > 0);
-    }
+    private readonly shouldClearCompletedShow = (): boolean =>
+        this.state.completedItems > 0;
 }

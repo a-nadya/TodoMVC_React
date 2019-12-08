@@ -4,24 +4,22 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env, argv) => {
-    const IS_DEV = argv.mode !== 'production';
-    
+    const isDev = argv != undefined && argv.mode !== 'production';
+    // hot reload
     return {
-
         entry: './src/index.tsx',
         output: {
-            filename: IS_DEV ? 'bundle.js' : 'bundle___[hash].js',
+            filename: isDev ? 'bundle.js' : 'bundle___[hash].js',
             path: bundlePath,
         },
         resolve: {
             extensions: [".ts", ".tsx", ".js"]
         },
-
         module: {
             rules: [
                 {
                     test: /\.(ts|tsx)$/,
-                    include: /src/,
+                    include: path.resolve(__dirname, "src"),
                     loader: "ts-loader"
                 },
                 {
@@ -31,13 +29,13 @@ module.exports = (env, argv) => {
                 {
                     test: /\.(less)$/,
                     use: [
-                        MiniCssExtractPlugin.loader,
+                        isDev ? "style-loader" : MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',
                             options: {
                                 sourceMap: true,
                                 modules: {
-                                    localIdentName: IS_DEV ? '[local]___[hash:base64:4]' : '[hash:base64:4]'
+                                    localIdentName: isDev ? '[local]-[hash:base64:2]' : '[hash:base64:5]'
                                 }
                             }
                         },
@@ -49,7 +47,7 @@ module.exports = (env, argv) => {
 
         plugins: [
             new MiniCssExtractPlugin({
-                filename: IS_DEV ? 'main.css' : 'main___[hash].css',
+                filename: isDev ? 'main.css' : 'main___[hash].css',
             }),
             new HtmlWebpackPlugin({
                 template: './resources/index.html',

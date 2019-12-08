@@ -1,9 +1,10 @@
-import * as React from "react";
-import {Todo} from "../../models/todo";
-import {Checkbox} from "./Checkbox";
-
-import * as styles from "./TodoItem.less";
 import classNames from "classnames";
+import * as React from "react";
+
+import { Todo } from "../../models/todo";
+
+import { Checkbox } from "./Checkbox";
+import * as styles from "./TodoItem.less";
 
 interface TodoComponentProps {
     todo: Todo;
@@ -14,19 +15,31 @@ interface TodoComponentProps {
 }
 
 export class TodoItem extends React.Component<TodoComponentProps> {
-    render() {
+    public render(): React.ReactNode {
         return (
-            (this.shouldItemShow() &&
+            this.shouldItemShow() && (
                 <div className={styles.todo}>
-                    <Checkbox todo={this.props.todo} todoKey={this.props.todoKey} onCheck={this.props.onCheck}/>
-                    <input className={classNames({[`${styles.text}`]: true}, {[`${styles.completed}`]: !this.props.todo.active})}
-                           value={this.props.todo.text} readOnly={true}
+                    <Checkbox
+                        todo={this.props.todo}
+                        todoKey={this.props.todoKey}
+                        onCheck={this.props.onCheck}
                     />
-                    <button className={styles.closeButton} onClick={() => this.props.onDelete(this.props.todoKey)}>x
+                    <input
+                        className={classNames(
+                            { [`${styles.text}`]: true },
+                            { [`${styles.completed}`]: !this.props.todo.active }
+                        )}
+                        value={this.props.todo.text}
+                        readOnly={true}
+                    />
+                    <button
+                        className={styles.closeButton}
+                        onClick={() => this.props.onDelete(this.props.todoKey)}>
+                        x
                     </button>
                 </div>
             )
-        )
+        );
     }
 
     private readonly shouldItemShow = (): boolean => {
@@ -40,5 +53,5 @@ export class TodoItem extends React.Component<TodoComponentProps> {
             default:
                 return false;
         }
-    }
+    };
 }

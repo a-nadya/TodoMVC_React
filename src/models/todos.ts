@@ -1,5 +1,5 @@
-import {Todo} from "./todo";
+import { Todo } from "./todo";
 
 export interface Todos {
-    [key: string]: Todo
+    [key: string]: Todo;
 }
