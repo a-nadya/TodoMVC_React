@@ -31,9 +31,8 @@ export class TodoItem extends React.Component<TodoComponentProps> {
                 />
                 <button
                     className={cn("closeButton")}
-                    onClick={() => this.props.onDelete(this.props.id)}>
-
-                </button>
+                    onClick={() => this.props.onDelete(this.props.id)}
+                />
             </div>
         );
         // );
