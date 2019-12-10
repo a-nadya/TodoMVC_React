@@ -2,8 +2,8 @@
 
 .todo {
   display: flex;
-  position: relative;
   border-bottom: thin solid @lightGrayColor;
+  align-items: center;
 }
 
 .text {
@@ -20,7 +20,21 @@
 .closeButton {
   visibility: hidden;
   position: absolute;
-  right: 10px;
+  right: 20px;
+  border: none;
+  background-color: transparent;
+  outline: 0;
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.closeButton:before {
+  border-radius: 50%;
+  content: "\2716";
+  font-size: 24px;
 }
 
 .todo:hover .closeButton {

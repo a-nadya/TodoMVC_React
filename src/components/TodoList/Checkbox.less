@@ -1,14 +1,15 @@
 @import "../../variables.less";
 
 .input {
-  opacity: 0;
+  display: none;
 }
 
 .label {
   box-sizing: border-box;
-  position: absolute;
-  height: 24px;
-  width: 24px;
+  display: inline-block;
+  height: 28px;
+  width: 28px;
+  margin: 10px;
   border: 1px solid @lightGrayColor;
   border-radius: 50%;
 
@@ -29,8 +30,8 @@
     transform: rotate(-45deg);
 
     position: relative;
-    left: 4px;
-    top: 6px;
+    left: 6px;
+    top: 8px;
   }
 
   &.checked::before {
