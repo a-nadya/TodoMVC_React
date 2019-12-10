@@ -1,4 +1,6 @@
 declare module "*.less" {
-    const styles: { [classname: string]: undefined | string };
+    const styles: (
+        ...args: Array<{ [classname: string]: boolean } | string>
+    ) => string;
     export = styles;
 }

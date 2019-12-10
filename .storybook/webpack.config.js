@@ -13,6 +13,7 @@ module.exports = ({config}) => {
         {
             test: /\.(css|less)$/,
             use: [
+                "classnames-loader",
                 "style-loader",
                 {
                     loader: "css-loader",

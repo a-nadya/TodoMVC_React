@@ -1,28 +1,23 @@
 import * as React from "react";
 
-import { Todo } from "../../models/todo";
-
-import * as styles from "./Checkbox.less";
+import * as cn from "./Checkbox.less";
 
 interface CheckboxProps {
-    todo: Todo;
-    todoKey: string;
-    onCheck: (key: string) => void;
+    value: boolean;
+    onCheck: (newValue: boolean) => void;
 }
 
 export class Checkbox extends React.Component<CheckboxProps> {
     public render(): React.ReactNode {
         return (
-            <div className={styles.checkbox}>
+            <label className={cn("label", { checked: this.props.value })}>
                 <input
-                    className={styles.input}
+                    className={cn("input")}
                     type="checkbox"
-                    id={this.props.todoKey}
-                    onChange={() => this.props.onCheck(this.props.todoKey)}
-                    checked={!this.props.todo.active}
+                    onChange={() => this.props.onCheck(this.props.value)}
+                    checked={this.props.value}
                 />
-                <label htmlFor={this.props.todoKey} className={styles.label} />
-            </div>
+            </label>
         );
     }
 }

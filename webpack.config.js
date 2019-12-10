@@ -29,6 +29,7 @@ module.exports = (env, argv) => {
                 {
                     test: /\.(less)$/,
                     use: [
+                        "classnames-loader",
                         isDev ? "style-loader" : MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',

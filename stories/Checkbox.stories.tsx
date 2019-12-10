@@ -4,10 +4,10 @@ import { Checkbox } from "../src/components/TodoList/Checkbox";
 
 export default { title: "Checkbox" };
 
-export const checkboxDefault = () => (
-    <Checkbox
-        todoKey={"44"}
-        todo={{ active: true, text: "test" }}
-        onCheck={() => {}}
-    />
+export const checked = () => (
+    <Checkbox value={true} onCheck={() => {}} />
+);
+
+export const unchecked = () => (
+    <Checkbox value={false} onCheck={() => {}} />
 );

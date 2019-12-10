@@ -1,50 +1,39 @@
 @import "../../variables.less";
 
-.checkbox {
-  display: flex;
-  align-items: center;
-  padding-right: 10px;
-}
-
 .input {
   opacity: 0;
 }
 
 .label {
-  height: 20px;
-  width: 20px;
+  box-sizing: border-box;
+  position: absolute;
+  height: 24px;
+  width: 24px;
   border: 1px solid @lightGrayColor;
   border-radius: 50%;
+
+  &.checked {
+    border-color: @grayColor;
+  }
 }
 
-.label::before {
-  content: "";
-  display: block;
+.label {
+  &::before {
+    content: none;
+    display: block;
 
-  height: 3px;
-  width: 10px;
-  border-left: 2px solid;
-  border-bottom: 2px solid;
-  transform: rotate(-45deg);
+    height: 5px;
+    width: 12px;
+    border-left: 2px solid;
+    border-bottom: 2px solid;
+    transform: rotate(-45deg);
 
-  position: relative;
-  left: 5px;
-  top: 7px;
+    position: relative;
+    left: 4px;
+    top: 6px;
+  }
+
+  &.checked::before {
+    content: "";
+  }
 }
-
-.input ~ .label::before {
-  content: none;
-  border-color: @grayColor;
-}
-
-.input:checked ~ .label::before {
-  content: "";
-}
-
-.input:checked ~ .label {
-  border-color: @grayColor;
-}
-
-//.input:focus ~ .label {
-// border-color: @grayColor;
-//}
