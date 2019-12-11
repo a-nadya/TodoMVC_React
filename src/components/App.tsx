@@ -48,8 +48,9 @@ export class App extends React.Component<{}, TodosState> {
                             todos={this.state.todos}
                             onCheck={this.handleCheckTodo}
                             onDelete={this.handleDeleteTodo}
-                            // filterCondition={this.state.filterCondition}
+                            filterCondition={this.state.filterCondition}
                         />
+
                         {this.shouldFooterShow() && (
                             <Footer
                                 itemsLeft={this.state.activeItems}

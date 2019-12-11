@@ -9,7 +9,6 @@ import * as cn from "./TodoItem.less";
 interface TodoComponentProps {
     id: string;
     todo: Todo;
-    // filterCondition: string;
     onCheck: (id: string) => void;
     onDelete: (id: string) => void;
 }
@@ -17,7 +16,6 @@ interface TodoComponentProps {
 export class TodoItem extends React.Component<TodoComponentProps> {
     public render(): React.ReactNode {
         return (
-            // this.shouldItemShow() && (
             <div className={cn("todo")}>
                 <Checkbox
                     value={!this.props.todo.active}
@@ -37,19 +35,5 @@ export class TodoItem extends React.Component<TodoComponentProps> {
                 </div>
             </div>
         );
-        // );
     }
-
-    // private readonly shouldItemShow = (): boolean => {
-    //     switch (this.props.filterCondition) {
-    //         case "all":
-    //             return true;
-    //         case "active":
-    //             return this.props.todo.active;
-    //         case "completed":
-    //             return !this.props.todo.active;
-    //         default:
-    //             return false;
-    //     }
-    // };
 }
