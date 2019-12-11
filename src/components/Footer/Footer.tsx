@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { ClearCompletedButton } from "./ClearCompletedButton/ClearCompletedButton";
 import { FilterButton } from "./FilterButton/FilterButton";
 import * as cn from "./Footer.less";
 
@@ -7,7 +8,7 @@ interface FooterProps {
     itemsLeft: number;
     onFilter: (flag: string) => void;
     onClear: () => void;
-    shouldClearCompletedShow: boolean;
+    shouldClearCompletedButtonShow: boolean;
 }
 
 export class Footer extends React.Component<FooterProps> {
@@ -29,13 +30,10 @@ export class Footer extends React.Component<FooterProps> {
                         onFilter={() => this.props.onFilter("Completed")}
                     />
                 </span>
-                <button
-                    className={cn({
-                        hiddenClearButton: !this.props.shouldClearCompletedShow,
-                    })}
-                    onClick={this.props.onClear}>
-                    Clear completed
-                </button>
+                <ClearCompletedButton
+                    onClear={this.props.onClear}
+                    shouldShow={this.props.shouldClearCompletedButtonShow}
+                />
             </div>
         );
     }
