@@ -15,7 +15,7 @@ export function FilterButton(props: FilterButtonProps): React.ReactElement {
                 name="todosToShow"
                 id={props.filterName}
                 onChange={props.onFilter}
-                defaultChecked={props.filterName === "all"}
+                defaultChecked={props.filterName === "All"}
             />
             <label htmlFor={props.filterName} className={cn("label")}>
                 {props.filterName}

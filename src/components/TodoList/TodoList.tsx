@@ -36,11 +36,11 @@ export function TodoList(props: TodoListProps): React.ReactElement {
 
 const shouldItemShow = (filterCondition: string, active: boolean): boolean => {
     switch (filterCondition) {
-        case "all":
+        case "All":
             return true;
-        case "active":
+        case "Active":
             return active;
-        case "completed":
+        case "Completed":
             return !active;
         default:
             return false;

@@ -9,7 +9,6 @@ import { Todos } from "../models/todos";
 import * as cn from "./App.less";
 import { Footer } from "./Footer/Footer";
 import { SearchLine } from "./SearchLine/SearchLine";
-import { TodoItem } from "./TodoItem/TodoItem";
 import { TodoList } from "./TodoList/TodoList";
 
 interface TodosState {
@@ -25,7 +24,7 @@ export class App extends React.Component<{}, TodosState> {
         todos: {},
         activeItems: 0,
         completedItems: 0,
-        filterCondition: "all",
+        filterCondition: "All",
         loading: true,
     };
 

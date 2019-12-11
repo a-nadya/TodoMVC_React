@@ -17,16 +17,16 @@ export class Footer extends React.Component<FooterProps> {
                 <div>{`${this.props.itemsLeft} items left`}</div>
                 <span>
                     <FilterButton
-                        filterName={"all"}
-                        onFilter={() => this.props.onFilter("all")}
+                        filterName={"All"}
+                        onFilter={() => this.props.onFilter("All")}
                     />
                     <FilterButton
-                        filterName={"active"}
-                        onFilter={() => this.props.onFilter("active")}
+                        filterName={"Active"}
+                        onFilter={() => this.props.onFilter("Active")}
                     />
                     <FilterButton
-                        filterName={"completed"}
-                        onFilter={() => this.props.onFilter("completed")}
+                        filterName={"Completed"}
+                        onFilter={() => this.props.onFilter("Completed")}
                     />
                 </span>
                 <button
