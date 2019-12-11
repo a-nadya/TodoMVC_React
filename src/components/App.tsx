@@ -9,7 +9,8 @@ import { Todos } from "../models/todos";
 import * as cn from "./App.less";
 import { Footer } from "./Footer/Footer";
 import { SearchLine } from "./SearchLine/SearchLine";
-import { TodoItem } from "./TodoList/TodoItem";
+import { TodoItem } from "./TodoItem/TodoItem";
+import { TodoList } from "./TodoList/TodoList";
 
 interface TodosState {
     todos: Todos;
@@ -43,18 +44,12 @@ export class App extends React.Component<{}, TodosState> {
                             onEnter={this.handleAddTodo}
                             onCheck={this.handleCheckAllTodos}
                         />
-                        <div className={cn("list")}>
-                            {Object.keys(this.state.todos).map(key => (
-                                <TodoItem
-                                    todo={this.state.todos[key]}
-                                    id={key}
-                                    key={key}
-                                    onCheck={this.handleCheckTodo}
-                                    onDelete={this.handleDeleteTodo}
-                                    // filterCondition={this.state.filterCondition}
-                                />
-                            ))}
-                        </div>
+                        <TodoList
+                            todos={this.state.todos}
+                            onCheck={this.handleCheckTodo}
+                            onDelete={this.handleDeleteTodo}
+                            // filterCondition={this.state.filterCondition}
+                        />
                         {this.shouldFooterShow() && (
                             <Footer
                                 itemsLeft={this.state.activeItems}

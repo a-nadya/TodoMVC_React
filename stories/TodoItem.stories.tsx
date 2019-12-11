@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {TodoItem} from "../src/components/TodoList/TodoItem";
+import {TodoItem} from "../src/components/TodoItem/TodoItem";
 
 export default { title: "TodoItem" };
 
