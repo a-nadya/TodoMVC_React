@@ -8,7 +8,7 @@ import { Todos } from "../models/todos";
 
 import * as cn from "./App.less";
 import { Footer } from "./Footer/Footer";
-import { Input } from "./Input/Input";
+import { SearchLine } from "./SearchLine/SearchLine";
 import { TodoItem } from "./TodoList/TodoItem";
 
 interface TodosState {
@@ -38,7 +38,8 @@ export class App extends React.Component<{}, TodosState> {
                 <>
                     <header>todos</header>
                     <div className={cn("content")}>
-                        <Input
+                        <SearchLine
+                            checkboxValue={this.state.activeItems === 0}
                             onEnter={this.handleAddTodo}
                             onCheck={this.handleCheckAllTodos}
                         />

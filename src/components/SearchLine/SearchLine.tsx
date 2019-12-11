@@ -1,17 +1,19 @@
 import * as React from "react";
 
-import * as cn from "./Input.less";
+import { CheckAllButton } from "./CheckAllButton/CheckAllButton";
+import * as cn from "./SearchLine.less";
 
 interface InputState {
     inputValue: string;
 }
 
 interface InputProps {
+    checkboxValue: boolean;
     onEnter: (value: string) => void;
     onCheck: () => void;
 }
 
-export class Input extends React.Component<InputProps, InputState> {
+export class SearchLine extends React.Component<InputProps, InputState> {
     public state: InputState = {
         inputValue: "",
     };
@@ -19,7 +21,11 @@ export class Input extends React.Component<InputProps, InputState> {
     public render(): React.ReactElement {
         return (
             <div className={cn("inputContainer")}>
-                <input type="checkbox" onChange={this.props.onCheck} />
+                {/*//TODO: считать количество сделанных и передавать в value*/}
+                <CheckAllButton
+                    value={this.props.checkboxValue}
+                    onCheck={this.props.onCheck}
+                />
                 <input
                     className={cn("input")}
                     placeholder="What needs to be done?"
