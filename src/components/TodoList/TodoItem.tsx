@@ -2,7 +2,8 @@ import * as React from "react";
 
 import { Todo } from "../../models/todo";
 
-import { Checkbox } from "./Checkbox";
+import { Checkbox } from "./Checkbox/Checkbox";
+import { DeleteButton } from "./DeleteButton/DeleteButton";
 import * as cn from "./TodoItem.less";
 
 interface TodoComponentProps {
@@ -29,10 +30,11 @@ export class TodoItem extends React.Component<TodoComponentProps> {
                     value={this.props.todo.text}
                     readOnly={true}
                 />
-                <button
-                    className={cn("closeButton")}
-                    onClick={() => this.props.onDelete(this.props.id)}
-                />
+                <div className={cn("delete-button")}>
+                    <DeleteButton
+                        onDelete={() => this.props.onDelete(this.props.id)}
+                    />
+                </div>
             </div>
         );
         // );

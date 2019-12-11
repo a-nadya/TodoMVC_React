@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Checkbox } from "../src/components/TodoList/Checkbox";
+import { Checkbox } from "../src/components/TodoList/Checkbox/Checkbox";
 
 export default { title: "Checkbox" };
 

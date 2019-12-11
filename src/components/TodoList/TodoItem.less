@@ -4,6 +4,7 @@
   display: flex;
   border-bottom: thin solid @lightGrayColor;
   align-items: center;
+  position: relative;
 }
 
 .text {
@@ -17,26 +18,12 @@
   text-decoration: line-through;
 }
 
-.closeButton {
+.delete-button {
   visibility: hidden;
   position: absolute;
-  right: 20px;
-  border: none;
-  background-color: transparent;
-  outline: 0;
-  opacity: 0.5;
-
-  &:hover {
-    opacity: 1;
-  }
+  right: 10px;
 }
 
-.closeButton:before {
-  border-radius: 50%;
-  content: "\2716";
-  font-size: 24px;
-}
-
-.todo:hover .closeButton {
+.todo:hover .delete-button {
   visibility: visible;
 }
