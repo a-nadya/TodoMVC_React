@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { FilterButton } from "./FilterButton/FilterButton";
 import * as cn from "./Footer.less";
 
 interface FooterProps {
@@ -15,34 +16,18 @@ export class Footer extends React.Component<FooterProps> {
             <div className={cn("footer")}>
                 <div>{`${this.props.itemsLeft} items left`}</div>
                 <span>
-                    <input
-                        type="radio"
-                        name="todosToShow"
-                        id="All"
-                        onChange={() => this.props.onFilter("all")}
-                        defaultChecked={true}
+                    <FilterButton
+                        filterName={"all"}
+                        onFilter={() => this.props.onFilter("all")}
                     />
-                    <label htmlFor="All" className={cn("label")}>
-                        All
-                    </label>
-                    <input
-                        type="radio"
-                        name="todosToShow"
-                        id="Active"
-                        onChange={() => this.props.onFilter("active")}
+                    <FilterButton
+                        filterName={"active"}
+                        onFilter={() => this.props.onFilter("active")}
                     />
-                    <label htmlFor="Active" className={cn("label")}>
-                        Active
-                    </label>
-                    <input
-                        type="radio"
-                        name="todosToShow"
-                        id="Completed"
-                        onChange={() => this.props.onFilter("completed")}
+                    <FilterButton
+                        filterName={"completed"}
+                        onFilter={() => this.props.onFilter("completed")}
                     />
-                    <label htmlFor="Completed" className={cn("label")}>
-                        Completed
-                    </label>
                 </span>
                 <button
                     className={cn({

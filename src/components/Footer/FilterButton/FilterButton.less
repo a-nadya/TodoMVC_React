@@ -1,0 +1,21 @@
+@import "../../../variables.less";
+
+.label {
+  cursor: pointer;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+
+  &:hover {
+    border-color: @lightGrayColor;
+  }
+}
+
+input[name="todosToShow"] {
+  display: none;
+
+  &:checked + .label {
+    border-color: @grayColor;
+  }
+}
