@@ -13,8 +13,6 @@ import { TodoList } from "./TodoList/TodoList";
 
 interface TodosState {
     todos: Todos;
-    activeItems: number;
-    completedItems: number;
     filterCondition: string;
     loading: boolean;
 }
@@ -22,8 +20,6 @@ interface TodosState {
 export class App extends React.Component<{}, TodosState> {
     public state: TodosState = {
         todos: {},
-        activeItems: 0,
-        completedItems: 0,
         filterCondition: "All",
         loading: true,
     };
@@ -33,13 +29,18 @@ export class App extends React.Component<{}, TodosState> {
     }
 
     public render(): React.ReactNode {
+        const activeItems: number = itemsCount.getActive(this.state.todos);
+        const completedItems: number = itemsCount.getCompleted(
+            this.state.todos
+        );
+
         return (
             !this.state.loading && (
                 <>
                     <header>todos</header>
                     <div className={cn("content")}>
                         <SearchLine
-                            checkboxValue={this.state.activeItems === 0}
+                            checkboxValue={activeItems === 0}
                             onEnter={this.handleAddTodo}
                             onCheck={this.handleCheckAllTodos}
                         />
@@ -50,12 +51,14 @@ export class App extends React.Component<{}, TodosState> {
                             filterCondition={this.state.filterCondition}
                         />
 
-                        {this.shouldFooterShow() && (
+                        {completedItems + activeItems > 0 && (
                             <Footer
-                                itemsLeft={this.state.activeItems}
+                                itemsLeft={activeItems}
                                 onFilter={this.handleFilterTodo}
                                 onClear={this.handleClearCompletedTodo}
-                                shouldClearCompletedButtonShow={this.shouldClearCompletedShow()}
+                                shouldClearCompletedButtonShow={
+                                    completedItems > 0
+                                }
                             />
                         )}
                     </div>
@@ -68,8 +71,6 @@ export class App extends React.Component<{}, TodosState> {
         const todos = await api.select();
         this.setState({
             todos: todos,
-            activeItems: itemsCount.getActive(todos),
-            completedItems: itemsCount.getCompleted(todos),
             loading: false,
         });
     };
@@ -111,14 +112,6 @@ export class App extends React.Component<{}, TodosState> {
         const response = await api.update(todos);
         this.setState({
             todos: todosConstructor.extract(response),
-            activeItems: itemsCount.getActive(todos),
-            completedItems: itemsCount.getCompleted(todos),
         });
     };
-
-    private readonly shouldFooterShow = (): boolean =>
-        this.state.completedItems + this.state.activeItems > 0;
-
-    private readonly shouldClearCompletedShow = (): boolean =>
-        this.state.completedItems > 0;
 }
