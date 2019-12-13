@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import { FilterButton } from "../src/components/Footer/FilterButton/FilterButton";
+import { RadioButton } from "../src/components/Footer/RadioButton/RadioButton";
 
-export default { title: "FilterButton" };
+export default { title: "RadioButton" };
 
 export const twoButtons = () => (
     <>
-        <FilterButton filterName={"All"} onFilter={() => {}} />
-        <FilterButton filterName={"Completed"} onFilter={() => {}} />
+        <RadioButton filterValue={"All"} onFilter={() => {}} />
+        <RadioButton filterValue={"Completed"} onFilter={() => {}} />
     </>
 );

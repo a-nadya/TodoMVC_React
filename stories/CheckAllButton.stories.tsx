@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { CheckAllButton } from "../src/components/SearchLine/CheckAllButton/CheckAllButton";
+import { CheckAllButton } from "../src/components/Header/CheckAllButton/CheckAllButton";
 
 export default { title: "CheckAllButton" };
 

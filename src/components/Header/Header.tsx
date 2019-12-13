@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { CheckAllButton } from "./CheckAllButton/CheckAllButton";
-import * as cn from "./SearchLine.less";
+import * as cn from "./Header.less";
 
 interface InputState {
     inputValue: string;
@@ -13,7 +13,7 @@ interface InputProps {
     onCheck: () => void;
 }
 
-export class SearchLine extends React.Component<InputProps, InputState> {
+export class Header extends React.Component<InputProps, InputState> {
     public state: InputState = {
         inputValue: "",
     };

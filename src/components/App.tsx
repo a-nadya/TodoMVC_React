@@ -8,7 +8,7 @@ import { Todos } from "../models/todos";
 
 import * as cn from "./App.less";
 import { Footer } from "./Footer/Footer";
-import { SearchLine } from "./SearchLine/SearchLine";
+import { Header } from "./Header/Header";
 import { TodoList } from "./TodoList/TodoList";
 
 interface TodosState {
@@ -39,7 +39,7 @@ export class App extends React.Component<{}, TodosState> {
                 <>
                     <header>todos</header>
                     <div className={cn("content")}>
-                        <SearchLine
+                        <Header
                             checkboxValue={activeItems === 0}
                             onEnter={this.handleAddTodo}
                             onCheck={this.handleCheckAllTodos}
@@ -53,7 +53,7 @@ export class App extends React.Component<{}, TodosState> {
 
                         {completedItems + activeItems > 0 && (
                             <Footer
-                                itemsLeft={activeItems}
+                                itemsLeftValue={activeItems}
                                 onFilter={this.handleFilterTodo}
                                 onClear={this.handleClearCompletedTodo}
                                 shouldClearCompletedButtonShow={

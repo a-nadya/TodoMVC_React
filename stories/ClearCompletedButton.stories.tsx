@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import { ClearCompletedButton } from "../src/components/Footer/ClearCompletedButton/ClearCompletedButton";
+import { Button } from "../src/components/Footer/Button/Button";
 
-export default { title: "ClearCompletedButton" };
+export default { title: "Button" };
 
 export const button = () => (
-    <ClearCompletedButton onClear={() => {}} shouldShow={true}/>
+    <Button name="Clear completed" onClear={() => {}} shouldShow={true}/>
 );

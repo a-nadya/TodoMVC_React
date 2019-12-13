@@ -1,11 +1,11 @@
 import * as React from "react";
 
-import { ClearCompletedButton } from "./ClearCompletedButton/ClearCompletedButton";
-import { FilterButton } from "./FilterButton/FilterButton";
+import { Button } from "./Button/Button";
 import * as cn from "./Footer.less";
+import { RadioButton } from "./RadioButton/RadioButton";
 
 interface FooterProps {
-    itemsLeft: number;
+    itemsLeftValue: number;
     onFilter: (flag: string) => void;
     onClear: () => void;
     shouldClearCompletedButtonShow: boolean;
@@ -15,22 +15,23 @@ export class Footer extends React.Component<FooterProps> {
     public render(): React.ReactNode {
         return (
             <div className={cn("footer")}>
-                <div>{`${this.props.itemsLeft} items left`}</div>
+                <div>{`${this.props.itemsLeftValue} items left`}</div>
                 <span>
-                    <FilterButton
-                        filterName={"All"}
+                    <RadioButton
+                        filterValue={"All"}
                         onFilter={() => this.props.onFilter("All")}
                     />
-                    <FilterButton
-                        filterName={"Active"}
+                    <RadioButton
+                        filterValue={"Active"}
                         onFilter={() => this.props.onFilter("Active")}
                     />
-                    <FilterButton
-                        filterName={"Completed"}
+                    <RadioButton
+                        filterValue={"Completed"}
                         onFilter={() => this.props.onFilter("Completed")}
                     />
                 </span>
-                <ClearCompletedButton
+                <Button
+                    name="Clear completed"
                     onClear={this.props.onClear}
                     shouldShow={this.props.shouldClearCompletedButtonShow}
                 />

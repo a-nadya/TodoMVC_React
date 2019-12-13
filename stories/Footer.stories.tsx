@@ -9,7 +9,7 @@ export const footer = () => (
         <Footer
             onClear={() => {}}
             onFilter={() => {}}
-            itemsLeft={999}
+            itemsLeftValue={999}
             shouldClearCompletedButtonShow={true}
         />
     </>

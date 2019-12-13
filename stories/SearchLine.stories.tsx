@@ -1,7 +1,9 @@
 import * as React from "react";
 
-import {SearchLine} from "../src/components/SearchLine/SearchLine";
+import { Header } from "../src/components/Header/Header";
 
 export default { title: "SearchLine" };
 
-export const allChecked = () => <SearchLine checkboxValue={true} onCheck={() => {}} onEnter={() => {}} />;
+export const allChecked = () => (
+    <Header checkboxValue={true} onCheck={() => {}} onEnter={() => {}} />
+);
