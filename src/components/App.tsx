@@ -103,8 +103,8 @@ export class App extends React.Component<{}, TodosState> {
         await this.updateStateAndDataOnServer(todos);
     };
 
-    private readonly handleFilterTodo = (flag: FilterCondition): void => {
-        this.setState({ filterCondition: flag });
+    private readonly handleFilterTodo = (value: FilterCondition): void => {
+        this.setState({ filterCondition: value });
     };
 
     private readonly handleClearCompletedTodo = async (): Promise<void> => {

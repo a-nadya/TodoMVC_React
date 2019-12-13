@@ -4,7 +4,7 @@ import { FilterCondition } from "../App";
 
 import { Button } from "./Button/Button";
 import * as cn from "./Footer.less";
-import { RadioButton } from "./RadioButton/RadioButton";
+import { RadioGroup } from "./RadioGroup/RadioGroup";
 
 interface FooterProps {
     itemsLeftValue: number;
@@ -13,37 +13,24 @@ interface FooterProps {
     shouldClearCompletedButtonShow: boolean;
 }
 
-export class Footer extends React.Component<FooterProps> {
-    public render(): React.ReactNode {
-        return (
-            <div className={cn("footer")}>
-                <div>{`${this.props.itemsLeftValue} items left`}</div>
-                <span>
-                    <RadioButton
-                        filterValue={FilterCondition.all}
-                        onFilter={() =>
-                            this.props.onFilter(FilterCondition.all)
-                        }
-                    />
-                    <RadioButton
-                        filterValue={FilterCondition.active}
-                        onFilter={() =>
-                            this.props.onFilter(FilterCondition.active)
-                        }
-                    />
-                    <RadioButton
-                        filterValue={FilterCondition.completed}
-                        onFilter={() =>
-                            this.props.onFilter(FilterCondition.completed)
-                        }
-                    />
-                </span>
-                <Button
-                    name="Clear completed"
-                    onClear={this.props.onClear}
-                    shouldShow={this.props.shouldClearCompletedButtonShow}
-                />
-            </div>
-        );
-    }
+export function Footer(props: FooterProps): React.ReactElement {
+    return (
+        <div className={cn("footer")}>
+            <div>{`${props.itemsLeftValue} items left`}</div>
+            <RadioGroup
+                name="todosToShow"
+                values={[
+                    FilterCondition.all,
+                    FilterCondition.active,
+                    FilterCondition.completed,
+                ]}
+                onFilter={props.onFilter}
+            />
+            <Button
+                name="Clear completed"
+                onClear={props.onClear}
+                shouldShow={props.shouldClearCompletedButtonShow}
+            />
+        </div>
+    );
 }
