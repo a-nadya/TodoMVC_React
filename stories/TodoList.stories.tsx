@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { FilterCondition } from "../src/components/App";
 import { TodoList } from "../src/components/TodoList/TodoList";
 
 export default { title: "TodoList" };
@@ -13,6 +14,6 @@ export const list = () => (
         }}
         onCheck={() => {}}
         onDelete={() => {}}
-        filterCondition={"all"}
+        filterCondition={FilterCondition.all}
     />
 );

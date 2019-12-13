@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { FilterCondition } from "../../App";
+
 import * as cn from "./RadioButton.less";
 
 interface FilterButtonProps {
@@ -15,7 +17,7 @@ export function RadioButton(props: FilterButtonProps): React.ReactElement {
                 name="todosToShow"
                 id={props.filterValue}
                 onChange={props.onFilter}
-                defaultChecked={props.filterValue === "All"}
+                defaultChecked={props.filterValue === FilterCondition.all}
             />
             <label htmlFor={props.filterValue} className={cn("label")}>
                 {props.filterValue}

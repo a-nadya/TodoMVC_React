@@ -1,13 +1,14 @@
 import * as React from "react";
 
 import { Todos } from "../../models/todos";
+import { FilterCondition } from "../App";
 import { TodoItem } from "../TodoItem/TodoItem";
 
 import * as cn from "./TodoList.less";
 
 interface TodoListProps {
     todos: Todos;
-    filterCondition: string;
+    filterCondition: FilterCondition;
     onCheck: (id: string) => void;
     onDelete: (id: string) => void;
 }
@@ -34,13 +35,16 @@ export function TodoList(props: TodoListProps): React.ReactElement {
     );
 }
 
-const shouldItemShow = (filterCondition: string, active: boolean): boolean => {
+const shouldItemShow = (
+    filterCondition: FilterCondition,
+    active: boolean
+): boolean => {
     switch (filterCondition) {
-        case "All":
+        case FilterCondition.all:
             return true;
-        case "Active":
+        case FilterCondition.active:
             return active;
-        case "Completed":
+        case FilterCondition.completed:
             return !active;
         default:
             return false;
