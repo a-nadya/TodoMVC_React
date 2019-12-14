@@ -17,10 +17,12 @@ export class TodoItem extends React.Component<TodoComponentProps> {
     public render(): React.ReactNode {
         return (
             <div className={cn("todo")}>
-                <Checkbox
-                    value={!this.props.todo.active}
-                    onCheck={() => this.props.onCheck(this.props.id)}
-                />
+                <div className={cn("checkbox")}>
+                    <Checkbox
+                        value={!this.props.todo.active}
+                        onCheck={() => this.props.onCheck(this.props.id)}
+                    />
+                </div>
                 <input
                     className={cn("text", {
                         completed: !this.props.todo.active,
