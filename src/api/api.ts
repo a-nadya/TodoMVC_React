@@ -1,3 +1,4 @@
+import { Empty } from "../models/empty";
 import { Todos } from "../models/todos";
 
 const BIN_ID = "5dd9060c040d843991f79576";
@@ -18,7 +19,9 @@ const getTodos = async (): Promise<Todos> => {
     });
 };
 
-const setTodos = async (todos: Todos): Promise<{ [key: string]: Todos }> => {
+const setTodos = async (
+    todos: Todos | Empty
+): Promise<{ [key: string]: Todos }> => {
     const url = `https://api.jsonbin.io/b/${BIN_ID}`;
     return fetch(url, {
         method: "PUT",

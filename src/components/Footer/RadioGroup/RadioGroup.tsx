@@ -14,7 +14,7 @@ export function RadioGroup(props: RadioGroupProps): React.ReactElement {
     return (
         <div>
             {props.values.map(value => (
-                <span className={cn("radio")}>
+                <span className={cn("radio")} key={value}>
                     <RadioButton
                         onFilter={() => {
                             props.onFilter(value);

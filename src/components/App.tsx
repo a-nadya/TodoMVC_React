@@ -10,6 +10,7 @@ import * as cn from "./App.less";
 import { Footer } from "./Footer/Footer";
 import { Header } from "./Header/Header";
 import { TodoList } from "./TodoList/TodoList";
+import {Empty} from "../models/empty";
 
 interface TodosState {
     todos: Todos;
@@ -74,7 +75,7 @@ export class App extends React.Component<{}, TodosState> {
     }
 
     private readonly loadData = async (): Promise<void> => {
-        const todos = await api.select();
+        const todos = todosConstructor.validateEmpty(await api.select());
         this.setState({
             todos: todos,
             loading: false,
@@ -113,7 +114,7 @@ export class App extends React.Component<{}, TodosState> {
     };
 
     private readonly updateStateAndDataOnServer = async (
-        todos: Todos
+        todos: Todos | Empty
     ): Promise<void> => {
         const response = await api.update(todos);
         this.setState({

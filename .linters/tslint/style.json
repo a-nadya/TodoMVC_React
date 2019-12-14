@@ -1,7 +1,7 @@
 {
     "rules": {
         "array-type": [true, "array-simple"],
-        "arrow-return-shorthand": [true, "multiline"],
+        "arrow-return-shorthand": [false],
         "binary-expression-operand-order": true,
         "callable-types": true,
         "class-name": true,
