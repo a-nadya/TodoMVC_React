@@ -3,6 +3,7 @@ import * as React from "react";
 import { api } from "../api/api";
 import { itemsCount } from "../api/itemsCount";
 import { todosConstructor } from "../api/todosConstructor";
+import { Empty } from "../models/empty";
 import { Todo } from "../models/todo";
 import { Todos } from "../models/todos";
 
@@ -10,7 +11,6 @@ import * as cn from "./App.less";
 import { Footer } from "./Footer/Footer";
 import { Header } from "./Header/Header";
 import { TodoList } from "./TodoList/TodoList";
-import {Empty} from "../models/empty";
 
 interface TodosState {
     todos: Todos;
@@ -40,6 +40,7 @@ export class App extends React.Component<{}, TodosState> {
         const completedItems: number = itemsCount.getCompleted(
             this.state.todos
         );
+        const items = completedItems + activeItems;
 
         return (
             !this.state.loading && (
@@ -48,6 +49,7 @@ export class App extends React.Component<{}, TodosState> {
                     <div className={cn("content")}>
                         <Header
                             checkboxValue={activeItems === 0}
+                            shouldCheckAllButtonShow={items > 0}
                             onEnter={this.handleAddTodo}
                             onCheck={this.handleCheckAllTodos}
                         />
@@ -58,7 +60,7 @@ export class App extends React.Component<{}, TodosState> {
                             filterCondition={this.state.filterCondition}
                         />
 
-                        {completedItems + activeItems > 0 && (
+                        {items > 0 && (
                             <Footer
                                 itemsLeftValue={activeItems}
                                 onFilter={this.handleFilterTodo}

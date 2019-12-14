@@ -9,6 +9,7 @@ interface InputState {
 
 interface InputProps {
     checkboxValue: boolean;
+    shouldCheckAllButtonShow: boolean;
     onEnter: (value: string) => void;
     onCheck: () => void;
 }
@@ -23,6 +24,7 @@ export class Header extends React.Component<InputProps, InputState> {
             <div className={cn("inputContainer")}>
                 <div className={cn("check")}>
                     <CheckAllButton
+                        shouldShow={this.props.shouldCheckAllButtonShow}
                         value={this.props.checkboxValue}
                         onCheck={this.props.onCheck}
                     />
