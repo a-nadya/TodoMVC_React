@@ -8,7 +8,7 @@ import * as cn from "./TodoList.less";
 
 interface TodoListProps {
     todos: Todos;
-    filterCondition: FilterCondition;
+    filterCondition: string;
     onCheck: (id: string) => void;
     onDelete: (id: string) => void;
 }
@@ -36,7 +36,7 @@ export function TodoList(props: TodoListProps): React.ReactElement {
 }
 
 const shouldItemShow = (
-    filterCondition: FilterCondition,
+    filterCondition: string,
     active: boolean
 ): boolean => {
     switch (filterCondition) {

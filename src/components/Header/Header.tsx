@@ -21,11 +21,12 @@ export class Header extends React.Component<InputProps, InputState> {
     public render(): React.ReactElement {
         return (
             <div className={cn("inputContainer")}>
-                {/*//TODO: считать количество сделанных и передавать в value*/}
-                <CheckAllButton
-                    value={this.props.checkboxValue}
-                    onCheck={this.props.onCheck}
-                />
+                <div className={cn("check")}>
+                    <CheckAllButton
+                        value={this.props.checkboxValue}
+                        onCheck={this.props.onCheck}
+                    />
+                </div>
                 <input
                     className={cn("input")}
                     placeholder="What needs to be done?"

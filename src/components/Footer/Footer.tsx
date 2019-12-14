@@ -8,7 +8,7 @@ import { RadioGroup } from "./RadioGroup/RadioGroup";
 
 interface FooterProps {
     itemsLeftValue: number;
-    onFilter: (flag: FilterCondition) => void;
+    onFilter: (flag: string) => void;
     onClear: () => void;
     shouldClearCompletedButtonShow: boolean;
 }

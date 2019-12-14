@@ -13,7 +13,7 @@ import { TodoList } from "./TodoList/TodoList";
 
 interface TodosState {
     todos: Todos;
-    filterCondition: FilterCondition;
+    filterCondition: string;
     loading: boolean;
 }
 
@@ -103,7 +103,7 @@ export class App extends React.Component<{}, TodosState> {
         await this.updateStateAndDataOnServer(todos);
     };
 
-    private readonly handleFilterTodo = (value: FilterCondition): void => {
+    private readonly handleFilterTodo = (value: string): void => {
         this.setState({ filterCondition: value });
     };
 
