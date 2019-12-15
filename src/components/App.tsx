@@ -118,9 +118,19 @@ export class App extends React.Component<{}, TodosState> {
     private readonly updateStateAndDataOnServer = async (
         todos: Todos | Empty
     ): Promise<void> => {
-        const response = await api.update(todos);
-        this.setState({
-            todos: todosConstructor.extract(response),
+        this.setState(() => {
+            return {
+                todos: { ...todosConstructor.validateEmpty(todos) },
+            };
         });
+        const response = await api.update(todos);
+        if (
+            JSON.stringify(todosConstructor.validateEmpty(todos)) ===
+            JSON.stringify(todosConstructor.extract(response))
+        ) {
+            console.log("OK");
+        } else {
+            alert("что-то пошло не так");
+        }
     };
 }
