@@ -14,6 +14,7 @@ export const list = () => (
         }}
         onCheck={() => {}}
         onDelete={() => {}}
+        onEdit={() => {}}
         filterCondition={FilterCondition.all}
     />
 );

@@ -10,6 +10,7 @@ export const active = () => (
         id={"737373"}
         onCheck={() => {}}
         onDelete={() => {}}
+        onEdit={() => {}}
     />
 );
 
@@ -19,5 +20,6 @@ export const completed = () => (
         id={"737373"}
         onCheck={() => {}}
         onDelete={() => {}}
+        onEdit={() => {}}
     />
 );
