@@ -36,6 +36,15 @@ const deleteTodo = (todos: Todos, key: string): Todos | Empty => {
     return todos;
 };
 
+const editTodo = (todos: Todos, key: string, value: string): Todos => {
+    if (value === "") {
+        return deleteTodo(todos, key) as Todos;
+    } else {
+        todos[key].text = value;
+        return todos;
+    }
+};
+
 const updateTodoStatus = (todos: Todos, key: string): Todos => {
     todos[key]["active"] = !todos[key]["active"];
     return todos;
@@ -77,6 +86,7 @@ export const todosConstructor = {
     validateEmpty: checkIfTodosEmpty,
     extract: extractTodosFromResponse,
     delete: deleteTodo,
+    edit: editTodo,
     updateStatus: updateTodoStatus,
     updateAllStatuses: updateAllTodosStatus,
     deleteCompleted: deleteCompletedTodos,

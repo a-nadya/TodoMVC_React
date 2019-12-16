@@ -8,7 +8,16 @@
 }
 
 .text {
-  border: none;
+  min-height: @height;
+  font-size: @fontSize;
+  flex: 2;
+  padding: 15px;
+  box-sizing: border-box;
+  word-break: break-word;
+}
+
+.input {
+  display: inline-block;
   height: @height;
   font-size: @fontSize;
   flex: 2;
@@ -31,4 +40,9 @@
 
 .checkbox {
   margin: 10px;
+
+  &.hidden {
+    margin: 10px;
+    visibility: hidden;
+  }
 }

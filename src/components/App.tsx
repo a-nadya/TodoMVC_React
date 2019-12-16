@@ -55,9 +55,10 @@ export class App extends React.Component<{}, TodosState> {
                         />
                         <TodoList
                             todos={this.state.todos}
+                            filterCondition={this.state.filterCondition}
                             onCheck={this.handleCheckTodo}
                             onDelete={this.handleDeleteTodo}
-                            filterCondition={this.state.filterCondition}
+                            onEdit={this.handleEditTodo}
                         />
 
                         {items > 0 && (
@@ -91,8 +92,8 @@ export class App extends React.Component<{}, TodosState> {
         await this.updateStateAndDataOnServer(todos);
     };
 
-    private readonly handleCheckTodo = async (key: string): Promise<void> => {
-        const todos = todosConstructor.updateStatus(this.state.todos, key);
+    private readonly handleCheckTodo = async (id: string): Promise<void> => {
+        const todos = todosConstructor.updateStatus(this.state.todos, id);
         await this.updateStateAndDataOnServer(todos);
     };
 
@@ -101,8 +102,16 @@ export class App extends React.Component<{}, TodosState> {
         await this.updateStateAndDataOnServer(todos);
     };
 
-    private readonly handleDeleteTodo = async (key: string): Promise<void> => {
-        const todos = todosConstructor.delete(this.state.todos, key);
+    private readonly handleDeleteTodo = async (id: string): Promise<void> => {
+        const todos = todosConstructor.delete(this.state.todos, id);
+        await this.updateStateAndDataOnServer(todos);
+    };
+
+    private readonly handleEditTodo = async (
+        id: string,
+        value: string
+    ): Promise<void> => {
+        const todos = todosConstructor.edit(this.state.todos, id, value);
         await this.updateStateAndDataOnServer(todos);
     };
 
@@ -125,12 +134,10 @@ export class App extends React.Component<{}, TodosState> {
         });
         const response = await api.update(todos);
         if (
-            JSON.stringify(todosConstructor.validateEmpty(todos)) ===
+            JSON.stringify(todosConstructor.validateEmpty(todos)) !==
             JSON.stringify(todosConstructor.extract(response))
         ) {
-            console.log("OK");
-        } else {
-            alert("что-то пошло не так");
+            console.log("что-то пошло не так");
         }
     };
 }

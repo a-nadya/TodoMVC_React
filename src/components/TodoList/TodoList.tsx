@@ -11,6 +11,7 @@ interface TodoListProps {
     filterCondition: string;
     onCheck: (id: string) => void;
     onDelete: (id: string) => void;
+    onEdit: (id: string, value: string) => void;
 }
 
 export function TodoList(props: TodoListProps): React.ReactElement {
@@ -28,6 +29,7 @@ export function TodoList(props: TodoListProps): React.ReactElement {
                             key={key}
                             onCheck={props.onCheck}
                             onDelete={props.onDelete}
+                            onEdit={props.onEdit}
                         />
                     )
             )}
