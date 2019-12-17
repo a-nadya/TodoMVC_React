@@ -4,11 +4,23 @@ import "isomorphic-fetch";
 // tslint:disable-next-line:no-import-side-effect
 import "mocha";
 
-import { api } from "../src/api/api";
+import { JsonBinBasedTodoApi } from "../src/api/api";
+import { ITodoApi } from "../src/api/ITodoApi";
+
+async function clearTodos(api: ITodoApi): Promise<void> {
+    await api.setTodos({});
+}
 
 describe("Get", () => {
     it("should return correct data", async () => {
-        const response = await api.select();
+        const api = new JsonBinBasedTodoApi("5dd9060c040d843991f79576");
+        const response = await api.getTodos();
+        expect(response).eql({});
+    });
+
+    it("should return correct data", async () => {
+        const api = new JsonBinBasedTodoApi("5dd9060c040d843991f79576");
+        const response = await clearTodos(api);
         expect(response).eql({});
     });
 });

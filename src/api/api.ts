@@ -1,43 +1,48 @@
-import { Empty } from "../models/empty";
 import { Todos } from "../models/todos";
 
-const BIN_ID = "5dd9060c040d843991f79576";
+import { ITodoApi } from "./ITodoApi";
+
 const SECRET_KEY =
     "$2b$10$0C7oxSomMcnhkFJ20wQd9.8YEUpz920F5/rt7y7TsfNJj6y33exf6";
 
-const getTodos = async (): Promise<Todos> => {
-    const url = `https://api.jsonbin.io/b/${BIN_ID}/latest `;
-    return fetch(url, {
-        method: "GET",
-        headers: {
-            "secret-key": SECRET_KEY,
-        },
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-    });
-};
+export class JsonBinBasedTodoApi implements ITodoApi {
+    private readonly binId: string;
 
-const setTodos = async (
-    todos: Todos | Empty
-): Promise<{ [key: string]: Todos }> => {
-    const url = `https://api.jsonbin.io/b/${BIN_ID}`;
-    return fetch(url, {
-        method: "PUT",
-        headers: {
-            "secret-key": SECRET_KEY,
-            "Content-type": "application/json",
-        },
-        body: JSON.stringify(todos),
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-    });
-};
+    public constructor(binId: string) {
+        this.binId = binId;
+    }
 
-export const api = {
-    select: getTodos,
-    update: setTodos,
-};
+    public async getTodos(): Promise<Todos> {
+        const url = `https://api.jsonbin.io/b/${this.binId}/latest `;
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "secret-key": SECRET_KEY,
+            },
+        });
+        if (!response.ok) {
+            throw new Error("");
+        }
+        return response.json();
+    }
+
+    public async setTodos(todos: Todos): Promise<void> {
+        const url = `https://api.jsonbin.io/b/${this.binId}`;
+
+        const body = JSON.stringify(
+            Object.keys(todos).length === 0 ? { empty: false } : todos
+        );
+
+        const response = await fetch(url, {
+            method: "PUT",
+            headers: {
+                "secret-key": SECRET_KEY,
+                "Content-type": "application/json",
+            },
+            body: body,
+        });
+        if (!response.ok) {
+            throw new Error("");
+        }
+    }
+}

@@ -1,19 +1,15 @@
 import { Todos } from "../models/todos";
 
-const calcItemsLeft = (todos: Todos): number => {
-    const todosItems = Object.values(todos);
-    return todosItems.reduce((sum, current) => sum + Number(current.active), 0);
-};
+export class ItemsCount {
+    public static calcItemsLeft(todos: Todos): number {
+        return Object.values(todos).filter(x => x.active).length;
+    }
 
-const calcCompleted = (todos: Todos): number => {
-    const todosItems = Object.values(todos);
-    return todosItems.reduce(
-        (sum, current) => sum + Number(!current.active),
-        0
-    );
-};
-
-export const itemsCount = {
-    getActive: calcItemsLeft,
-    getCompleted: calcCompleted,
-};
+    private static calcCompleted(todos: Todos): number {
+        const todosItems = Object.values(todos);
+        return todosItems.reduce(
+            (sum, current) => sum + (current.active ? 0 : 1),
+            0
+        );
+    }
+}

@@ -26,11 +26,10 @@ export function Footer(props: FooterProps): React.ReactElement {
                 ]}
                 onFilter={props.onFilter}
             />
-            <Button
+            {props.shouldClearCompletedButtonShow && <Button
                 name="Clear completed"
                 onClear={props.onClear}
-                shouldShow={props.shouldClearCompletedButtonShow}
-            />
+            />}
         </div>
     );
 }

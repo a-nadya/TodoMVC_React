@@ -2,13 +2,13 @@ import * as React from "react";
 
 import * as cn from "./Button.less";
 
-interface ClearCompletedButtonProps {
+interface ButtonProps {
     name: string;
     shouldShow: boolean;
     onClear: () => void;
 }
 
-export function Button(props: ClearCompletedButtonProps): React.ReactElement {
+export function Button(props: ButtonProps): React.ReactElement {
     return (
         <label
             className={cn("label", {

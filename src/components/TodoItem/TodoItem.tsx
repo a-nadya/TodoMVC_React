@@ -14,9 +14,9 @@ interface TodoComponentState {
 interface TodoComponentProps {
     id: string;
     todo: Todo;
-    onCheck: (id: string) => void;
+    onChange: (id: string, nextValue: Todo) => void;
+
     onDelete: (id: string) => void;
-    onEdit: (id: string, value: string) => void;
 }
 
 export class TodoItem extends React.Component<TodoComponentProps> {
@@ -34,7 +34,12 @@ export class TodoItem extends React.Component<TodoComponentProps> {
                     })}>
                     <Checkbox
                         value={!this.props.todo.active}
-                        onCheck={() => this.props.onCheck(this.props.id)}
+                        onChange1111={() =>
+                            this.props.onChange(this.props.id, {
+                                ...this.props.todo,
+                                active: !this.props.todo.active,
+                            })
+                        }
                     />
                 </div>
                 {!this.state.isEditing && (

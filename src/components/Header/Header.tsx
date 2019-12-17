@@ -8,8 +8,8 @@ interface InputState {
 }
 
 interface InputProps {
-    checkboxValue: boolean;
-    shouldCheckAllButtonShow: boolean;
+    checkAllButtonChecked: boolean;
+    checkAllButtonVisible: boolean;
     onEnter: (value: string) => void;
     onCheck: () => void;
 }
@@ -33,20 +33,24 @@ export class Header extends React.Component<InputProps, InputState> {
                     className={cn("input")}
                     placeholder="What needs to be done?"
                     value={this.state.inputValue}
-                    onKeyDown={this.keyPress}
+                    onKeyDown={this.handleKeyPress}
                     onChange={this.handleChange}
                 />
             </div>
         );
     }
 
-    public handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    private readonly handleChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         this.setState({
             inputValue: event.target.value,
         });
     };
 
-    public keyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    private readonly handleKeyPress = (
+        event: React.KeyboardEvent<HTMLInputElement>
+    ) => {
         const value = event.currentTarget.value;
         if (event.keyCode === 13 && value !== "") {
             this.setState({ inputValue: "" });
