@@ -6,21 +6,20 @@ import { Checkbox } from "./Checkbox/Checkbox";
 import { DeleteButton } from "./DeleteButton/DeleteButton";
 import * as cn from "./TodoItem.less";
 
-interface TodoComponentState {
+interface TodoItemState {
     inputValue: string;
     isEditing: boolean;
 }
 
-interface TodoComponentProps {
+interface TodoItemProps {
     id: string;
     todo: Todo;
-    onCheck: (id: string) => void;
+    onChange: (id: string, nextTodo: Todo) => void;
     onDelete: (id: string) => void;
-    onEdit: (id: string, value: string) => void;
 }
 
-export class TodoItem extends React.Component<TodoComponentProps> {
-    public state: TodoComponentState = {
+export class TodoItem extends React.Component<TodoItemProps> {
+    public state: TodoItemState = {
         inputValue: this.props.todo.text,
         isEditing: false,
     };
@@ -34,7 +33,12 @@ export class TodoItem extends React.Component<TodoComponentProps> {
                     })}>
                     <Checkbox
                         value={!this.props.todo.active}
-                        onCheck={() => this.props.onCheck(this.props.id)}
+                        onChange={() =>
+                            this.props.onChange(this.props.id, {
+                                ...this.props.todo,
+                                active: !this.props.todo.active,
+                            })
+                        }
                     />
                 </div>
                 {!this.state.isEditing && (
@@ -60,8 +64,8 @@ export class TodoItem extends React.Component<TodoComponentProps> {
                 {this.state.isEditing && (
                     <input
                         className={cn("input")}
-                        onKeyDown={this.keyPress}
-                        onBlur={this.blur}
+                        onKeyDown={this.handleKeyPress}
+                        onBlur={this.handleBlur}
                         value={this.state.inputValue}
                         onChange={this.handleChange}
                         autoFocus={true}
@@ -77,16 +81,22 @@ export class TodoItem extends React.Component<TodoComponentProps> {
         });
     };
 
-    public keyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    public handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         const value = event.currentTarget.value;
         if (event.keyCode === 13) {
             this.setState({ isEditing: false });
-            this.props.onEdit(this.props.id, value);
+            this.props.onChange(this.props.id, {
+                ...this.props.todo,
+                text: value,
+            });
         }
     };
 
-    public blur = () => {
+    public handleBlur = () => {
         this.setState({ isEditing: false });
-        this.props.onEdit(this.props.id, this.state.inputValue);
+        this.props.onChange(this.props.id, {
+            ...this.props.todo,
+            text: this.state.inputValue,
+        });
     };
 }

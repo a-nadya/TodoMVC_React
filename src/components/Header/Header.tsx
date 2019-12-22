@@ -10,7 +10,7 @@ interface HeaderState {
 interface HeaderProps {
     checkAllButtonChecked: boolean;
     checkAllButtonVisible: boolean;
-    onEnter: (value: string) => void;
+    onAdd: (value: string) => void;
     onCheck: () => void;
 }
 
@@ -56,7 +56,7 @@ export class Header extends React.Component<HeaderProps, HeaderState> {
         const value = event.currentTarget.value;
         if (event.keyCode === 13 && value !== "") {
             this.setState({ inputValue: "" });
-            this.props.onEnter(value);
+            this.props.onAdd(value);
         }
     };
 }

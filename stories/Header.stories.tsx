@@ -9,6 +9,6 @@ export const allChecked = () => (
         checkAllButtonVisible={true}
         checkAllButtonChecked={true}
         onCheck={() => {}}
-        onEnter={() => {}}
+        onAdd={() => {}}
     />
 );

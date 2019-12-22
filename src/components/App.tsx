@@ -12,7 +12,7 @@ import { Footer } from "./Footer/Footer";
 import { Header } from "./Header/Header";
 import { TodoList } from "./TodoList/TodoList";
 
-interface TodosState {
+interface AppState {
     todos: Todos;
     filterCondition: string;
     loading: boolean;
@@ -24,8 +24,8 @@ export enum FilterCondition {
     completed = "Completed",
 }
 
-export class App extends React.Component<{}, TodosState> {
-    public state: TodosState = {
+export class App extends React.Component<{}, AppState> {
+    public state: AppState = {
         todos: {},
         filterCondition: FilterCondition.all,
         loading: true,
@@ -50,15 +50,14 @@ export class App extends React.Component<{}, TodosState> {
                         <Header
                             checkAllButtonChecked={activeItems === 0}
                             checkAllButtonVisible={items > 0}
-                            onEnter={this.handleAddTodo}
+                            onAdd={this.handleAddTodo}
                             onCheck={this.handleCheckAllTodos}
                         />
                         <TodoList
                             todos={this.state.todos}
                             filterCondition={this.state.filterCondition}
-                            onCheck={this.handleCheckTodo}
+                            onChange={this.handleEditTodo}
                             onDelete={this.handleDeleteTodo}
-                            onEdit={this.handleEditTodo}
                         />
 
                         {items > 0 && (
@@ -90,11 +89,6 @@ export class App extends React.Component<{}, TodosState> {
         await this.updateStateAndDataOnServer(todos);
     };
 
-    private readonly handleCheckTodo = async (id: string): Promise<void> => {
-        const todos = todosConstructor.updateStatus(this.state.todos, id);
-        await this.updateStateAndDataOnServer(todos);
-    };
-
     private readonly handleCheckAllTodos = async (): Promise<void> => {
         const todos = todosConstructor.updateAllStatuses(this.state.todos);
         await this.updateStateAndDataOnServer(todos);
@@ -107,9 +101,9 @@ export class App extends React.Component<{}, TodosState> {
 
     private readonly handleEditTodo = async (
         id: string,
-        value: string
+        todo: Todo
     ): Promise<void> => {
-        const todos = todosConstructor.edit(this.state.todos, id, value);
+        const todos = todosConstructor.edit(this.state.todos, id, todo);
         await this.updateStateAndDataOnServer(todos);
     };
 

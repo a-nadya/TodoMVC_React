@@ -12,9 +12,8 @@ export const list = () => (
             "444": { active: false, text: "qwer" },
             "423223": { active: true, text: "DDFDFFDDFDFFD" },
         }}
-        onCheck={() => {}}
         onDelete={() => {}}
-        onEdit={() => {}}
+        onChange={() => {}}
         filterCondition={FilterCondition.all}
     />
 );

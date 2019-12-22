@@ -8,9 +8,8 @@ export const active = () => (
     <TodoItem
         todo={{ active: true, text: "testtesttest" }}
         id={"737373"}
-        onCheck={() => {}}
         onDelete={() => {}}
-        onEdit={() => {}}
+        onChange={() => {}}
     />
 );
 
@@ -18,8 +17,7 @@ export const completed = () => (
     <TodoItem
         todo={{ active: false, text: "HELLO" }}
         id={"737373"}
-        onCheck={() => {}}
         onDelete={() => {}}
-        onEdit={() => {}}
+        onChange={() => {}}
     />
 );
