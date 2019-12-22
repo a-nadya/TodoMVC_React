@@ -75,13 +75,25 @@ export class TodoItem extends React.Component<TodoItemProps> {
         );
     }
 
-    public handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    public handleBlur = () => {
+        this.setState({ isEditing: false });
+        this.props.onChange(this.props.id, {
+            ...this.props.todo,
+            text: this.state.inputValue,
+        });
+    };
+
+    private readonly handleChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         this.setState({
             inputValue: event.target.value,
         });
     };
 
-    public handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    private readonly handleKeyPress = (
+        event: React.KeyboardEvent<HTMLInputElement>
+    ) => {
         const value = event.currentTarget.value;
         if (event.keyCode === 13) {
             this.setState({ isEditing: false });
@@ -90,13 +102,5 @@ export class TodoItem extends React.Component<TodoItemProps> {
                 text: value,
             });
         }
-    };
-
-    public handleBlur = () => {
-        this.setState({ isEditing: false });
-        this.props.onChange(this.props.id, {
-            ...this.props.todo,
-            text: this.state.inputValue,
-        });
     };
 }
