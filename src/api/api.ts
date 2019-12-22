@@ -5,7 +5,7 @@ const BIN_ID = "5dd9060c040d843991f79576";
 const SECRET_KEY =
     "$2b$10$0C7oxSomMcnhkFJ20wQd9.8YEUpz920F5/rt7y7TsfNJj6y33exf6";
 
-const getTodos = async (): Promise<Todos> => {
+const getTodos = async (): Promise<Todos | Empty> => {
     const url = `https://api.jsonbin.io/b/${BIN_ID}/latest `;
     return fetch(url, {
         method: "GET",
@@ -19,17 +19,18 @@ const getTodos = async (): Promise<Todos> => {
     });
 };
 
-const setTodos = async (
-    todos: Todos | Empty
-): Promise<{ [key: string]: Todos }> => {
+const setTodos = async (todos: Todos): Promise<{ [key: string]: Todos }> => {
     const url = `https://api.jsonbin.io/b/${BIN_ID}`;
+    const body = JSON.stringify(
+        Object.keys(todos).length === 0 ? { empty: true } : todos
+    );
     return fetch(url, {
         method: "PUT",
         headers: {
             "secret-key": SECRET_KEY,
             "Content-type": "application/json",
         },
-        body: JSON.stringify(todos),
+        body: body,
     }).then(response => {
         if (response.ok) {
             return response.json();

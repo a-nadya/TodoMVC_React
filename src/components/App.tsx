@@ -3,7 +3,6 @@ import * as React from "react";
 import { api } from "../api/api";
 import { itemsCount } from "../api/itemsCount";
 import { todosConstructor } from "../api/todosConstructor";
-import { Empty } from "../models/empty";
 import { Todo } from "../models/todo";
 import { Todos } from "../models/todos";
 
@@ -117,7 +116,7 @@ export class App extends React.Component<{}, AppState> {
     };
 
     private readonly updateStateAndDataOnServer = async (
-        todos: Todos | Empty
+        todos: Todos
     ): Promise<void> => {
         this.setState(() => {
             return {

@@ -28,17 +28,14 @@ const extractTodosFromResponse = (response: {
     return checkIfTodosEmpty(response["data"]);
 };
 
-const deleteTodo = (todos: Todos, key: string): Todos | Empty => {
+const deleteTodo = (todos: Todos, key: string): Todos => {
     delete todos[key];
-    if (Object.keys(todos).length === 0) {
-        return { empty: true } as Empty;
-    }
     return todos;
 };
 
 const editTodo = (todos: Todos, id: string, todo: Todo): Todos => {
     if (todo.text === "") {
-        return deleteTodo(todos, id) as Todos;
+        return deleteTodo(todos, id);
     } else {
         todos[id] = todo;
         return todos;
@@ -56,16 +53,13 @@ const updateAllTodosStatus = (todos: Todos): Todos => {
     return todos;
 };
 
-const deleteCompletedTodos = (todos: Todos): Todos | Empty => {
+const deleteCompletedTodos = (todos: Todos): Todos => {
     const todosKeys = Object.keys(todos);
     todosKeys.map(key => {
         if (!todos[key]["active"]) {
             delete todos[key];
         }
     });
-    if (Object.keys(todos).length === 0) {
-        return { empty: true } as Empty;
-    }
     return todos;
 };
 
