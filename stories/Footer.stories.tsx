@@ -10,7 +10,7 @@ export const footer = () => (
             onClear={() => {}}
             onFilter={() => {}}
             itemsLeftValue={999}
-            shouldClearCompletedButtonShow={true}
+            clearCompletedButtonVisible={true}
         />
     </>
 );

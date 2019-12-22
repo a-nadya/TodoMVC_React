@@ -4,25 +4,25 @@ import { FilterCondition } from "../../App";
 
 import * as cn from "./RadioButton.less";
 
-interface FilterButtonProps {
+interface RadioButtonProps {
     name: string;
-    filterValue: string;
-    onFilter: () => void;
+    value: string;
+    onChange: () => void;
 }
 
-export function RadioButton(props: FilterButtonProps): React.ReactElement {
+export function RadioButton(props: RadioButtonProps): React.ReactElement {
     return (
         <>
             <input
                 type="radio"
                 name={props.name}
                 className={cn("input")}
-                id={props.filterValue}
-                onChange={props.onFilter}
-                defaultChecked={props.filterValue === FilterCondition.all}
+                id={props.value}
+                onChange={props.onChange}
+                defaultChecked={props.value === FilterCondition.all}
             />
-            <label htmlFor={props.filterValue} className={cn("label")}>
-                {props.filterValue}
+            <label htmlFor={props.value} className={cn("label")}>
+                {props.value}
             </label>
         </>
     );

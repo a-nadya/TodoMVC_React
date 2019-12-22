@@ -2,15 +2,15 @@ import * as React from "react";
 
 import { FilterCondition } from "../App";
 
-import { Button } from "./Button/Button";
 import * as cn from "./Footer.less";
 import { RadioGroup } from "./RadioGroup/RadioGroup";
+import { UnderlinedButton } from "./UnderlinedButton/UnderlinedButton";
 
 interface FooterProps {
     itemsLeftValue: number;
     onFilter: (flag: string) => void;
     onClear: () => void;
-    shouldClearCompletedButtonShow: boolean;
+    clearCompletedButtonVisible: boolean;
 }
 
 export function Footer(props: FooterProps): React.ReactElement {
@@ -24,13 +24,17 @@ export function Footer(props: FooterProps): React.ReactElement {
                     FilterCondition.active,
                     FilterCondition.completed,
                 ]}
-                onFilter={props.onFilter}
+                onCheck={props.onFilter}
             />
-            <Button
-                name="Clear completed"
-                onClear={props.onClear}
-                shouldShow={props.shouldClearCompletedButtonShow}
-            />
+            <div
+                className={cn({
+                    "hidden-button": !props.clearCompletedButtonVisible,
+                })}>
+                <UnderlinedButton
+                    name="Clear completed"
+                    onClear={props.onClear}
+                />
+            </div>
         </div>
     );
 }

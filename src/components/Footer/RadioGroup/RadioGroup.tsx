@@ -7,7 +7,7 @@ import * as cn from "./RadioGroup.less";
 interface RadioGroupProps {
     name: string;
     values: string[];
-    onFilter: (flag: string) => void;
+    onCheck: (flag: string) => void;
 }
 
 export function RadioGroup(props: RadioGroupProps): React.ReactElement {
@@ -16,11 +16,11 @@ export function RadioGroup(props: RadioGroupProps): React.ReactElement {
             {props.values.map(value => (
                 <span className={cn("radio")} key={value}>
                     <RadioButton
-                        onFilter={() => {
-                            props.onFilter(value);
-                        }}
                         name={props.name}
-                        filterValue={value}
+                        value={value}
+                        onChange={() => {
+                            props.onCheck(value);
+                        }}
                     />
                 </span>
             ))}

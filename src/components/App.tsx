@@ -66,9 +66,7 @@ export class App extends React.Component<{}, TodosState> {
                                 itemsLeftValue={activeItems}
                                 onFilter={this.handleFilterTodo}
                                 onClear={this.handleClearCompletedTodo}
-                                shouldClearCompletedButtonShow={
-                                    completedItems > 0
-                                }
+                                clearCompletedButtonVisible={completedItems > 0}
                             />
                         )}
                     </div>

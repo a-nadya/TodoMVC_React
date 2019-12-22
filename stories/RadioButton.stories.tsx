@@ -9,8 +9,8 @@ export const defaultCheckedButton = () => (
     <>
         <RadioButton
             name="aaa"
-            filterValue={FilterCondition.all}
-            onFilter={() => {}}
+            value={FilterCondition.all}
+            onChange={() => {}}
         />
     </>
 );
@@ -19,13 +19,13 @@ export const twoButtons = () => (
     <>
         <RadioButton
             name="aaa"
-            filterValue={FilterCondition.all}
-            onFilter={() => {}}
+            value={FilterCondition.all}
+            onChange={() => {}}
         />
         <RadioButton
             name="aaa"
-            filterValue={FilterCondition.completed}
-            onFilter={() => {}}
+            value={FilterCondition.completed}
+            onChange={() => {}}
         />
     </>
 );

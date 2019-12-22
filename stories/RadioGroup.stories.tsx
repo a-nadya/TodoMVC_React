@@ -9,7 +9,7 @@ export const group = () => (
         <RadioGroup
             name="aaa"
             values={["Oneeee", "Two"]}
-            onFilter={() => {}}
+            onCheck={() => {}}
         />
     </>
 );
