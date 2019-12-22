@@ -6,8 +6,8 @@ export default { title: "SearchLine" };
 
 export const allChecked = () => (
     <Header
-        shouldCheckAllButtonShow={true}
-        checkboxValue={true}
+        checkAllButtonVisible={true}
+        checkAllButtonChecked={true}
         onCheck={() => {}}
         onEnter={() => {}}
     />

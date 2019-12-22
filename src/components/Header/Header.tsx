@@ -3,29 +3,31 @@ import * as React from "react";
 import { CheckAllButton } from "./CheckAllButton/CheckAllButton";
 import * as cn from "./Header.less";
 
-interface InputState {
+interface HeaderState {
     inputValue: string;
 }
 
-interface InputProps {
-    checkboxValue: boolean;
-    shouldCheckAllButtonShow: boolean;
+interface HeaderProps {
+    checkAllButtonChecked: boolean;
+    checkAllButtonVisible: boolean;
     onEnter: (value: string) => void;
     onCheck: () => void;
 }
 
-export class Header extends React.Component<InputProps, InputState> {
-    public state: InputState = {
+export class Header extends React.Component<HeaderProps, HeaderState> {
+    public state: HeaderState = {
         inputValue: "",
     };
 
     public render(): React.ReactElement {
         return (
             <div className={cn("inputContainer")}>
-                <div className={cn("check")}>
+                <div
+                    className={cn("check-all-button", {
+                        hidden: !this.props.checkAllButtonVisible,
+                    })}>
                     <CheckAllButton
-                        shouldShow={this.props.shouldCheckAllButtonShow}
-                        value={this.props.checkboxValue}
+                        value={this.props.checkAllButtonChecked}
                         onCheck={this.props.onCheck}
                     />
                 </div>
@@ -33,20 +35,24 @@ export class Header extends React.Component<InputProps, InputState> {
                     className={cn("input")}
                     placeholder="What needs to be done?"
                     value={this.state.inputValue}
-                    onKeyDown={this.keyPress}
+                    onKeyDown={this.handleKeyPress}
                     onChange={this.handleChange}
                 />
             </div>
         );
     }
 
-    public handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    private readonly handleChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         this.setState({
             inputValue: event.target.value,
         });
     };
 
-    public keyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    private readonly handleKeyPress = (
+        event: React.KeyboardEvent<HTMLInputElement>
+    ) => {
         const value = event.currentTarget.value;
         if (event.keyCode === 13 && value !== "") {
             this.setState({ inputValue: "" });

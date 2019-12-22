@@ -48,8 +48,8 @@ export class App extends React.Component<{}, TodosState> {
                     <header>todos</header>
                     <div className={cn("content")}>
                         <Header
-                            checkboxValue={activeItems === 0}
-                            shouldCheckAllButtonShow={items > 0}
+                            checkAllButtonChecked={activeItems === 0}
+                            checkAllButtonVisible={items > 0}
                             onEnter={this.handleAddTodo}
                             onCheck={this.handleCheckAllTodos}
                         />

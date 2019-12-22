@@ -5,16 +5,16 @@ import { CheckAllButton } from "../src/components/Header/CheckAllButton/CheckAll
 export default { title: "CheckAllButton" };
 
 export const checked = () => (
-    <CheckAllButton shouldShow={true} value={true} onCheck={() => {}} />
+    <CheckAllButton value={true} onCheck={() => {}} />
 );
 
 export const unchecked = () => (
-    <CheckAllButton shouldShow={true} value={false} onCheck={() => {}} />
+    <CheckAllButton value={false} onCheck={() => {}} />
 );
 
 export const twoCheckAllButton = () => (
     <>
-        <CheckAllButton shouldShow={true} value={true} onCheck={() => {}} />
-        <CheckAllButton shouldShow={true} value={true} onCheck={() => {}} />
+        <CheckAllButton value={true} onCheck={() => {}} />
+        <CheckAllButton value={true} onCheck={() => {}} />
     </>
 );
