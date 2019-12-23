@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { api } from "../api/api";
-import { itemsCount } from "../api/itemsCount";
-import { todosConstructor } from "../api/todosConstructor";
+import { Api } from "../api/Api";
+import { itemsCount } from "../api/ItemsCount";
+import { todosConstructor } from "../api/TodosConstructor";
 import { Todo } from "../models/todo";
 import { Todos } from "../models/todos";
 
@@ -22,6 +22,9 @@ export enum FilterCondition {
     active = "Active",
     completed = "Completed",
 }
+
+const binId = "5dd9060c040d843991f79576";
+const api = new Api(binId);
 
 export class App extends React.Component<{}, AppState> {
     public state: AppState = {
@@ -74,7 +77,13 @@ export class App extends React.Component<{}, AppState> {
     }
 
     private readonly loadData = async (): Promise<void> => {
-        const todos = todosConstructor.validateEmpty(await api.select());
+        let response = {};
+        try {
+            response = await api.select();
+        } catch (e) {
+            console.log("ошибка поймана, разбираемся");
+        }
+        const todos = todosConstructor.validateEmpty(response);
         this.setState({
             todos: todos,
             loading: false,
@@ -123,12 +132,10 @@ export class App extends React.Component<{}, AppState> {
                 todos: { ...todosConstructor.validateEmpty(todos) },
             };
         });
-        const response = await api.update(todos);
-        if (
-            JSON.stringify(todosConstructor.validateEmpty(todos)) !==
-            JSON.stringify(todosConstructor.extract(response))
-        ) {
-            console.log("что-то пошло не так");
+        try {
+            await api.update(todos);
+        } catch {
+            console.log("ошибка поймана, разбираемся");
         }
     };
 }

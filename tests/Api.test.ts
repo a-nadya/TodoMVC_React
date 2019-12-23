@@ -4,7 +4,7 @@ import "isomorphic-fetch";
 // tslint:disable-next-line:no-import-side-effect
 import "mocha";
 
-import { api } from "../src/api/api";
+import { api } from "../src/api/Api";
 
 describe("Get", () => {
     it("should return correct data", async () => {

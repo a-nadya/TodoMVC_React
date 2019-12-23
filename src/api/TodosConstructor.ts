@@ -2,7 +2,7 @@ import { Empty } from "../models/empty";
 import { Todo } from "../models/todo";
 import { Todos } from "../models/todos";
 
-import { itemsCount } from "./itemsCount";
+import { itemsCount } from "./ItemsCount";
 
 const addTodo = (todos: Todos | Empty, todoText: Todo["text"]): Todos => {
     if (todos.empty === true) {
