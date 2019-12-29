@@ -20,68 +20,88 @@ interface TodoItemProps {
 
 export class TodoItem extends React.Component<TodoItemProps> {
     public state: TodoItemState = {
-        inputValue: this.props.todo.text,
+        inputValue: "",
         isEditing: false,
     };
 
     public render(): React.ReactNode {
+        const { isEditing } = this.state;
+        const { todo } = this.props;
+
         return (
             <div className={cn("todo")}>
-                <div
-                    className={cn("checkbox", {
-                        hidden: this.state.isEditing,
-                    })}>
+                <div className={cn("checkbox", { hidden: isEditing })}>
                     <Checkbox
-                        value={!this.props.todo.active}
-                        onChange={() =>
-                            this.props.onChange(this.props.id, {
-                                ...this.props.todo,
-                                active: !this.props.todo.active,
-                            })
-                        }
+                        value={!todo.active}
+                        onChange={this.handleChangeTodoStatus}
                     />
                 </div>
-                {!this.state.isEditing && (
-                    <>
-                        <div
-                            className={cn("text", {
-                                completed: !this.props.todo.active,
-                            })}
-                            onDoubleClick={() =>
-                                this.setState({ isEditing: true })
-                            }>
-                            {this.props.todo.text}
-                        </div>
-                        <div className={cn("delete-button")}>
-                            <DeleteButton
-                                onDelete={() =>
-                                    this.props.onDelete(this.props.id)
-                                }
-                            />
-                        </div>
-                    </>
-                )}
-                {this.state.isEditing && (
-                    <input
-                        className={cn("input")}
-                        onKeyDown={this.handleKeyPress}
-                        onBlur={this.handleBlur}
-                        value={this.state.inputValue}
-                        onChange={this.handleChange}
-                        autoFocus={true}
-                    />
-                )}
+                {isEditing ? this.renderItemEdit() : this.renderItemView()}
             </div>
         );
     }
 
     public handleBlur = () => {
+        this.finishEditing();
+    };
+
+    private readonly handleKeyPress = (event: React.KeyboardEvent) => {
+        if (event.keyCode === 13) {
+            this.finishEditing();
+        }
+    };
+
+    private readonly handleChangeTodoStatus = () => {
+        this.updateTodo({ active: !this.props.todo.active });
+    };
+
+    private renderItemEdit(): JSX.Element {
+        return (
+            <input
+                className={cn("input")}
+                onKeyDown={this.handleKeyPress}
+                onBlur={this.handleBlur}
+                value={this.state.inputValue}
+                onChange={this.handleChange}
+                autoFocus={true}
+            />
+        );
+    }
+
+    private renderItemView(): JSX.Element {
+        return (
+            <>
+                <div
+                    className={cn("text", {
+                        completed: !this.props.todo.active,
+                    })}
+                    onDoubleClick={this.startEditing}>
+                    {this.props.todo.text}
+                </div>
+                <div className={cn("delete-button")}>
+                    <DeleteButton
+                        onClick={() => this.props.onDelete(this.props.id)}
+                    />
+                </div>
+            </>
+        );
+    }
+
+    private readonly startEditing = () => {
+        this.setState({ isEditing: true, inputValue: this.props.todo.text });
+    };
+
+    private finishEditing(): void {
         this.setState({ isEditing: false });
+        this.updateTodo({ text: this.state.inputValue });
+    }
+
+    private updateTodo(todoUpdate: Partial<Todo>): void {
         this.props.onChange(this.props.id, {
             ...this.props.todo,
-            text: this.state.inputValue,
+            ...todoUpdate,
         });
-    };
+    }
 
     private readonly handleChange = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -89,18 +109,5 @@ export class TodoItem extends React.Component<TodoItemProps> {
         this.setState({
             inputValue: event.target.value,
         });
-    };
-
-    private readonly handleKeyPress = (
-        event: React.KeyboardEvent<HTMLInputElement>
-    ) => {
-        const value = event.currentTarget.value;
-        if (event.keyCode === 13) {
-            this.setState({ isEditing: false });
-            this.props.onChange(this.props.id, {
-                ...this.props.todo,
-                text: value,
-            });
-        }
     };
 }

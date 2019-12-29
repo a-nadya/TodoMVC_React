@@ -1,3 +1,3 @@
 export interface Empty {
-    [empty: string]: boolean;
+    empty: boolean;
 }

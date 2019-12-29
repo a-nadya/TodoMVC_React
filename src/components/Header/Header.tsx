@@ -11,7 +11,7 @@ interface HeaderProps {
     checkAllButtonChecked: boolean;
     checkAllButtonVisible: boolean;
     onAdd: (value: string) => void;
-    onCheck: () => void;
+    onCheck: (value: boolean) => void;
 }
 
 export class Header extends React.Component<HeaderProps, HeaderState> {
