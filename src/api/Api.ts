@@ -13,7 +13,7 @@ export class Api implements IApi {
         this.binId = binId;
     }
 
-    public async select(): Promise<Todos | Empty> {
+    public async select(): Promise<Todos> {
         const url = `https://api.jsonbin.io/b/${this.binId}/latest `;
         const response = await fetch(url, {
             method: "GET",
@@ -24,7 +24,13 @@ export class Api implements IApi {
         if (!response.ok) {
             throw new Error("всё сломалось");
         }
-        return response.json();
+        // tslint:disable-next-line no-unsafe-any
+        const responseBody: Todos | Empty = await response.json();
+        if ("empty" in responseBody) {
+            return {};
+        } else {
+            return responseBody;
+        }
     }
 
     public async update(todos: Todos): Promise<void> {

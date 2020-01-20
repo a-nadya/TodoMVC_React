@@ -1,8 +1,7 @@
 import * as React from "react";
 
 import { Api } from "../api/Api";
-import { itemsCount } from "../api/ItemsCount";
-import { todosConstructor } from "../api/TodosConstructor";
+import { TodoUtils } from "../api/TodosConstructor";
 import { Todo } from "../models/todo";
 import { Todos } from "../models/todos";
 
@@ -38,11 +37,11 @@ export class App extends React.Component<{}, AppState> {
     }
 
     public render(): React.ReactNode {
-        const activeItems: number = itemsCount.getActive(this.state.todos);
-        const completedItems: number = itemsCount.getCompleted(
-            this.state.todos
-        );
-        const items = completedItems + activeItems;
+        const { todos } = this.state;
+        const count = Object.values(todos).length;
+        const activeCount = Object.values(todos).filter(x => x.active).length;
+        const completedCount = Object.values(todos).filter(x => !x.active)
+            .length;
 
         return (
             !this.state.loading && (
@@ -50,8 +49,8 @@ export class App extends React.Component<{}, AppState> {
                     <header>todos</header>
                     <div className={cn("content")}>
                         <Header
-                            checkAllButtonChecked={activeItems === 0}
-                            checkAllButtonVisible={items > 0}
+                            checkAllButtonChecked={activeCount === 0}
+                            checkAllButtonVisible={count > 0}
                             onAdd={this.handleAddTodo}
                             onCheck={this.handleCheckAllTodos}
                         />
@@ -62,12 +61,12 @@ export class App extends React.Component<{}, AppState> {
                             onDelete={this.handleDeleteTodo}
                         />
 
-                        {items > 0 && (
+                        {count > 0 && (
                             <Footer
-                                itemsLeftValue={activeItems}
+                                itemsLeftValue={activeCount}
                                 onFilter={this.handleFilterTodo}
                                 onClear={this.handleClearCompletedTodo}
-                                clearCompletedButtonVisible={completedItems > 0}
+                                clearCompletedButtonVisible={completedCount > 0}
                             />
                         )}
                     </div>
@@ -77,33 +76,33 @@ export class App extends React.Component<{}, AppState> {
     }
 
     private readonly loadData = async (): Promise<void> => {
-        let response = {};
         try {
-            response = await api.select();
+            const todos = await api.select();
+            this.setState({
+                todos: todos,
+                loading: false,
+            });
         } catch (e) {
             console.log("ошибка поймана, разбираемся");
         }
-        const todos = todosConstructor.validateEmpty(response);
-        this.setState({
-            todos: todos,
-            loading: false,
-        });
     };
 
     private readonly handleAddTodo = async (
         text: Todo["text"]
     ): Promise<void> => {
-        const todos = todosConstructor.add(this.state.todos, text);
+        const todos = TodoUtils.addTodo(this.state.todos, text);
         await this.updateStateAndDataOnServer(todos);
     };
 
-    private readonly handleCheckAllTodos = async (): Promise<void> => {
-        const todos = todosConstructor.updateAllStatuses(this.state.todos);
+    private readonly handleCheckAllTodos = async (
+        status: boolean
+    ): Promise<void> => {
+        const todos = TodoUtils.updateAllTodosStatus(this.state.todos, !status);
         await this.updateStateAndDataOnServer(todos);
     };
 
     private readonly handleDeleteTodo = async (id: string): Promise<void> => {
-        const todos = todosConstructor.delete(this.state.todos, id);
+        const todos = TodoUtils.deleteTodo(this.state.todos, id);
         await this.updateStateAndDataOnServer(todos);
     };
 
@@ -111,7 +110,7 @@ export class App extends React.Component<{}, AppState> {
         id: string,
         todo: Todo
     ): Promise<void> => {
-        const todos = todosConstructor.edit(this.state.todos, id, todo);
+        const todos = TodoUtils.editTodo(this.state.todos, id, todo);
         await this.updateStateAndDataOnServer(todos);
     };
 
@@ -120,18 +119,14 @@ export class App extends React.Component<{}, AppState> {
     };
 
     private readonly handleClearCompletedTodo = async (): Promise<void> => {
-        const todos = todosConstructor.deleteCompleted(this.state.todos);
+        const todos = TodoUtils.deleteCompletedTodos(this.state.todos);
         await this.updateStateAndDataOnServer(todos);
     };
 
     private readonly updateStateAndDataOnServer = async (
         todos: Todos
     ): Promise<void> => {
-        this.setState(() => {
-            return {
-                todos: { ...todosConstructor.validateEmpty(todos) },
-            };
-        });
+        this.setState({ todos: todos });
         try {
             await api.update(todos);
         } catch {

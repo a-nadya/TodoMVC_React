@@ -4,7 +4,7 @@ import * as cn from "./CheckAllButton.less";
 
 interface CheckAllButtonProps {
     value: boolean;
-    onCheck: () => void;
+    onCheck: (value: boolean) => void;
 }
 
 export function CheckAllButton(props: CheckAllButtonProps): React.ReactElement {
@@ -13,7 +13,7 @@ export function CheckAllButton(props: CheckAllButtonProps): React.ReactElement {
             <input
                 className={cn("input")}
                 type="checkbox"
-                onChange={props.onCheck}
+                onChange={() => props.onCheck(!props.value)}
             />
         </label>
     );
